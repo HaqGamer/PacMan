@@ -16,7 +16,7 @@ public class ImageButton {
 		this.height = height;
 		skin = new Sprite(texture);
 		skin.setPosition(x, y);
-		skin.setSize(width, height);
+		//skin.setSize(width, height);
 	}
 
 	public void update(SpriteBatch batch) {
