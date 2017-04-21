@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import me.ihaq.pacman.ImageButton;
+import me.ihaq.pacman.PacMan;
+import me.ihaq.pacman.PacMan.STATE;
 
 public class MainMenu {
 	SpriteBatch batch;
@@ -31,7 +33,7 @@ public class MainMenu {
 		music.setLooping(true);
 		int mouseX = Gdx.input.getX();
 		int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-		System.out.println(mouseX + " " + mouseY);
+		// System.out.println(mouseX + " " + mouseY);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
@@ -40,10 +42,16 @@ public class MainMenu {
 		options.update(batch);
 		quit.update(batch);
 		if (play.isHovered(mouseX, mouseY)) {
+			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+				PacMan.state = STATE.HOWTOPLAY;
+			}
 			playHovered.update(batch);
 		}
 		if (options.isHovered(mouseX, mouseY)) {
 			optionsHovered.update(batch);
+			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+				PacMan.state = STATE.OPTIONS;
+			}
 		}
 		if (quit.isHovered(mouseX, mouseY)) {
 			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
