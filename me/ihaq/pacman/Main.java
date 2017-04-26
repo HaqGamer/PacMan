@@ -4,12 +4,14 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+import me.ihaq.pacman.menu.Game;
 import me.ihaq.pacman.menu.HowToPlayMenu;
 import me.ihaq.pacman.menu.MainMenu;
 
-public class PacMan extends ApplicationAdapter {
+public class Main extends ApplicationAdapter {
 	MainMenu menu;
 	HowToPlayMenu howToPlayMenu;
+	Game game;
 	public static STATE state;
 
 	public enum STATE {
@@ -20,6 +22,7 @@ public class PacMan extends ApplicationAdapter {
 	public void create() {
 		menu = new MainMenu();
 		howToPlayMenu = new HowToPlayMenu();
+		game = new Game();
 		state = STATE.MENU;
 	}
 
@@ -33,6 +36,9 @@ public class PacMan extends ApplicationAdapter {
 		}
 		if (state == STATE.HOWTOPLAY) {
 			howToPlayMenu.render();
+		}
+		if (state == STATE.GAME) {
+			game.render();
 		}
 	}
 }

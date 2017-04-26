@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import me.ihaq.pacman.ImageButton;
-import me.ihaq.pacman.PacMan;
-import me.ihaq.pacman.PacMan.STATE;
+import me.ihaq.pacman.Main;
+import me.ihaq.pacman.Main.STATE;
 
 public class MainMenu {
 	SpriteBatch batch;
@@ -43,14 +43,14 @@ public class MainMenu {
 		quit.update(batch);
 		if (play.isHovered(mouseX, mouseY)) {
 			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-				PacMan.state = STATE.HOWTOPLAY;
+				Main.state = STATE.HOWTOPLAY;
 			}
 			playHovered.update(batch);
 		}
 		if (options.isHovered(mouseX, mouseY)) {
 			optionsHovered.update(batch);
 			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-				PacMan.state = STATE.OPTIONS;
+				Main.state = STATE.OPTIONS;
 			}
 		}
 		if (quit.isHovered(mouseX, mouseY)) {
