@@ -34,6 +34,7 @@ public class MainMenu {
 		int mouseX = Gdx.input.getX();
 		int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 		// System.out.println(mouseX + " " + mouseY);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
