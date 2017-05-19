@@ -1,4 +1,4 @@
-package me.ihaq.pacman;
+package me.ihaq.pacman.utils;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;

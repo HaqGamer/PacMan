@@ -7,18 +7,19 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import me.ihaq.pacman.ImageButton;
 import me.ihaq.pacman.Main;
 import me.ihaq.pacman.Main.STATE;
+import me.ihaq.pacman.utils.ImageButton;
 
 public class MainMenu {
 	SpriteBatch batch;
-	Texture img;
+	Texture img, logo;
 	Music music;
 	ImageButton play, playHovered, options, optionsHovered, quit, quitHovered;
 
 	public MainMenu() {
 		batch = new SpriteBatch();
+		logo = new Texture("mainmenu/logo.png");
 		music = Gdx.audio.newMusic(Gdx.files.internal("mainmenu/mainmenusong.mp3"));
 		play = new ImageButton(new Texture("mainmenu/buttons/play.png"), 335, 363, 312, 105);
 		playHovered = new ImageButton(new Texture("mainmenu/buttons/playHOVERED.png"), 335, 363, 312, 105);
@@ -34,11 +35,12 @@ public class MainMenu {
 		int mouseX = Gdx.input.getX();
 		int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 		// System.out.println(mouseX + " " + mouseY);
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
-		batch.draw(new Texture("mainmenu/logo.png"), 0, 0);
+		batch.draw(logo, 0, 0);
 		play.update(batch);
 		options.update(batch);
 		quit.update(batch);

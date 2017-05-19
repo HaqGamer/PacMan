@@ -9,9 +9,9 @@ import me.ihaq.pacman.menu.HowToPlayMenu;
 import me.ihaq.pacman.menu.MainMenu;
 
 public class Main extends ApplicationAdapter {
-	MainMenu menu;
-	HowToPlayMenu howToPlayMenu;
-	Game game;
+	public MainMenu menu;
+	public HowToPlayMenu howToPlayMenu;
+	public Game game;
 	public static STATE state;
 
 	public enum STATE {
@@ -34,10 +34,10 @@ public class Main extends ApplicationAdapter {
 		if (state == STATE.MENU) {
 			menu.render();
 		}
-		if (state == STATE.HOWTOPLAY) {
+		else if (state == STATE.HOWTOPLAY) {
 			howToPlayMenu.render();
 		}
-		if (state == STATE.GAME) {
+		else if (state == STATE.GAME) {
 			game.render();
 		}
 	}
