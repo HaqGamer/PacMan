@@ -3,16 +3,16 @@ package me.ihaq.pacman.menu;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 import me.ihaq.pacman.entity.PacMan;
-import me.ihaq.pacman.entity.PacMan.FACING;
+import me.ihaq.pacman.entity.Tic;
 import me.ihaq.pacman.utils.CollisionRect;
 
 public class Game {
@@ -20,73 +20,50 @@ public class Game {
 	public SpriteBatch batch;
 	public Texture background;
 	public PacMan pacMan;
-	public boolean playing;
+	public static boolean playing;
 	public int rotation;
-	public ArrayList<CollisionRect> boxes = new ArrayList<CollisionRect>();
-	ShapeRenderer shapeRenderer;
+	public static ArrayList<CollisionRect> boxes;
+	public static ArrayList<Tic> tic;
+	public static int score;
+	public ShapeRenderer shapeRenderer;
+	public BitmapFont font;
 
 	public Game() {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
+		font = new BitmapFont();
 		background = new Texture("game/bGround.jpg");
 		pacMan = new PacMan(new Texture("game/pacman.png"), 475, 158);
 		playing = false;
+		score = 0;
+		boxes = new ArrayList<CollisionRect>();
+		tic = new ArrayList<Tic>();
+		createTics();
 		createBoundaries();
 	}
 
 	public void render() {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		batch.begin();
 		batch.draw(background, 0, 0);
-
 		pacMan.render(batch, pacMan.x, pacMan.y);
-
+		renderTics(batch);
+		font.getData().setScale(2F);
+		font.draw(batch, "Score: " + score, 22, 595);
 		System.out.println("X:" + Gdx.input.getX() + ", Y:" + (Gdx.graphics.getHeight() - Gdx.input.getY()));
-
-		// Teleportation
-		if (pacMan.x == 163 && pacMan.y < 408 && pacMan.y > 340) {
-			pacMan.x = 800;
-		} else if (pacMan.x == 796 && pacMan.y <= 408 && pacMan.y >= 340) {
-			pacMan.x = 164;
-		}
-
-		if (Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.RIGHT)
-				|| Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.DOWN) || playing == true) {
-			playing = true;
-
-			if (Gdx.input.isKeyJustPressed(Keys.LEFT)) {
-				pacMan.rotate(Keys.LEFT);
-
-			} else if (Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
-				pacMan.rotate(Keys.RIGHT);
-			} else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
-				pacMan.rotate(Keys.UP);
-			} else if (Gdx.input.isKeyJustPressed(Keys.DOWN)) {
-				pacMan.rotate(Keys.DOWN);
-			}
-			if (pacMan.getFacing() == FACING.UP && (pacMan.y + 1 + pacMan.height) < 704
-					&& !collides(pacMan.x, pacMan.y + 2)) {
-				pacMan.y += 2;
-			}
-
-			else if (pacMan.getFacing() == FACING.DOWN && pacMan.y - 2 > 17 && !collides(pacMan.x, pacMan.y - 2)) {
-				pacMan.y -= 2;
-			}
-
-			else if (pacMan.getFacing() == FACING.RIGHT && (pacMan.x + 2 + pacMan.width) < 832
-					&& !collides(pacMan.x + 2, pacMan.y)) {
-				pacMan.x += 2;
-			}
-
-			else if (pacMan.getFacing() == FACING.LEFT && pacMan.x - 2 > 163 && !collides(pacMan.x - 2, pacMan.y)) {
-				pacMan.x -= 2;
-			}
-
-		}
-
 		batch.end();
-		// renderBoundaries();
+	}
+
+	public void createTics() {
+		tic.add(new Tic(new Texture("game/tic.png"), 323, 166));
+	}
+
+	public void renderTics(SpriteBatch batch) {
+		for (Tic t : tic) {
+			t.render(batch);
+		}
 	}
 
 	public void createBoundaries() {
@@ -125,6 +102,7 @@ public class Game {
 		boxes.add(new CollisionRect(335, 614, 438, 657));
 		boxes.add(new CollisionRect(560, 614, 663, 657));
 		boxes.add(new CollisionRect(708, 614, 787, 657));
+
 	}
 
 	public void renderBoundaries() {
@@ -134,21 +112,6 @@ public class Game {
 			shapeRenderer.rect(r.x, r.y, r.width, r.height);
 			shapeRenderer.end();
 		}
-	}
-
-	public boolean collides(int x, int y) {
-		CollisionRect pac = new CollisionRect(x, y, x + pacMan.width, y + pacMan.height);
-		/*
-		 * shapeRenderer.begin(ShapeType.Filled);
-		 * shapeRenderer.setColor(Color.RED); shapeRenderer.rect(pac.x, pac.y,
-		 * pac.width, pac.height); shapeRenderer.end();
-		 */
-		for (CollisionRect r : boxes) {
-			if (r.collidesWith(pac)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 }
