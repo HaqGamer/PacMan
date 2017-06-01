@@ -12,10 +12,10 @@ import me.ihaq.pacman.Main.STATE;
 import me.ihaq.pacman.utils.ImageButton;
 
 public class MainMenu {
-	SpriteBatch batch;
-	Texture img, logo;
-	Music music;
-	ImageButton play, playHovered, options, optionsHovered, quit, quitHovered;
+	private SpriteBatch batch;
+	private Texture logo;
+	private Music music;
+	private ImageButton play, playHovered, options, optionsHovered, quit, quitHovered;
 
 	public MainMenu() {
 		batch = new SpriteBatch();
@@ -34,7 +34,6 @@ public class MainMenu {
 		music.setLooping(true);
 		int mouseX = Gdx.input.getX();
 		int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-		// System.out.println(mouseX + " " + mouseY);
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

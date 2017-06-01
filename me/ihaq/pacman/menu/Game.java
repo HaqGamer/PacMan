@@ -29,6 +29,7 @@ public class Game {
 	public static int score;
 	public ShapeRenderer shapeRenderer;
 	public BitmapFont font;
+	public static boolean invincilbe = false;
 
 	public Game() {
 		batch = new SpriteBatch();
@@ -48,16 +49,12 @@ public class Game {
 	public void render() {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		batch.begin();
 		batch.draw(background, 0, 0);
 		pacMan.render(batch, pacMan.x, pacMan.y);
 		renderTics(batch);
 		font.getData().setScale(2F);
 		font.draw(batch, "" + score, 22, 595);
-		// System.out.println("X:" + Gdx.input.getX() + ", Y:" +
-		// (Gdx.graphics.getHeight() - Gdx.input.getY()));
-		// renderBoundaries();
 		batch.end();
 	}
 
@@ -158,7 +155,7 @@ public class Game {
 	}
 
 	public void renderTics(SpriteBatch batch) {
-		for(PowerUp p : powerUp){
+		for (PowerUp p : powerUp) {
 			p.render(batch);
 		}
 		for (Tic t : tic) {
@@ -203,7 +200,6 @@ public class Game {
 		boxes.add(new CollisionRect(560, 612, 663, 656));
 		boxes.add(new CollisionRect(708, 612, 787, 656));
 		boxes.add(new CollisionRect(410, 336, 588, 426));
-
 	}
 
 	public void renderBoundaries() {

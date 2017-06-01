@@ -56,7 +56,7 @@ public class PacMan {
 			} else if (Gdx.input.isKeyJustPressed(Keys.DOWN)) {
 				rotate(Keys.DOWN);
 			}
-			
+
 			if (getFacing() == FACING.UP && (y + 1 + height) < 704 && !collides(x, y + 2)) {
 				this.y += 2;
 			}
@@ -75,6 +75,7 @@ public class PacMan {
 
 		}
 		ticCollide(x, y);
+		cherryCollide(x, y);
 	}
 
 	public void rotate(int key) {
@@ -138,6 +139,19 @@ public class PacMan {
 			if (r.isAlive()) {
 				if (r.getCollisionRect().collidesWith(pac)) {
 					Game.score++;
+					r.setAlive(false);
+				}
+			}
+		}
+
+	}
+
+	public void cherryCollide(int x, int y) {
+		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
+		for (PowerUp r : Game.powerUp) {
+			if (r.isAlive()) {
+				if (r.getCollisionRect().collidesWith(pac)) {
+					Game.invincilbe = true;
 					r.setAlive(false);
 				}
 			}
