@@ -16,6 +16,7 @@ public class Ghost {
 	private Sprite ghost;
 	private FACING facing;
 	private boolean alive;
+	private CollisionRect rect;
 
 	public Ghost(Texture t, int x, int y) {
 		this.ghost = new Sprite(t);
@@ -25,17 +26,19 @@ public class Ghost {
 		this.height = t.getHeight();
 		this.facing = FACING.UP;
 		this.alive = true;
+		this.rect = new CollisionRect(x, y, x + this.width, y + this.height);
 	}
 
 	public void render(SpriteBatch batch) {
-		if(!Game.playing || !this.alive){
+		if (!Game.playing || !this.alive) {
 			return;
 		}
-		
+
 		this.ghost.setPosition(this.x, this.y);
 		this.ghost.draw(batch);
-				
-		if (this.facing == FACING.UP  && !collides(this.x,this.y + 2)) {
+		this.rect = new CollisionRect(this.x, this.y, this.x + this.width, this.y + this.height);
+
+		if (this.facing == FACING.UP && !collides(this.x, this.y + 2)) {
 			this.vx = 0;
 			this.vy = 2;
 
@@ -66,14 +69,12 @@ public class Ghost {
 			this.x += this.vx;
 			this.y += this.vy;
 		}
-		
-		this.facing = this.facing == FACING.UP  && collides(this.x,this.y + 2) ? newDirection() : this.facing;
+
+		this.facing = this.facing == FACING.UP && collides(this.x, this.y + 2) ? newDirection() : this.facing;
 		this.facing = this.facing == FACING.DOWN && collides(this.x, this.y - 2) ? newDirection() : this.facing;
 		this.facing = this.facing == FACING.RIGHT && collides(this.x + 2, this.y) ? newDirection() : this.facing;
-		this.facing = this.facing == FACING.LEFT &&  collides(this.x - 2, this.y) ? newDirection() : this.facing;
-		
-		
-		
+		this.facing = this.facing == FACING.LEFT && collides(this.x - 2, this.y) ? newDirection() : this.facing;
+
 	}
 
 	private boolean collides(int x, int y) {
@@ -88,15 +89,43 @@ public class Ghost {
 
 	private FACING newDirection() {
 		int newMove = new Random().nextInt(4);
-		if (newMove == 0) { //UP
+		if (newMove == 0) { // UP
 			return FACING.UP;
-		} else if (newMove == 1) { //DOWN
+		} else if (newMove == 1) { // DOWN
 			return FACING.DOWN;
-		} else if (newMove == 2) { //RIGHT
+		} else if (newMove == 2) { // RIGHT
 			return FACING.RIGHT;
-		} else { //LEFT
+		} else { // LEFT
 			return FACING.LEFT;
 		}
 
+	}
+
+	public int getX() {
+		return this.x;
+	}
+
+	public int getY() {
+		return this.y;
+	}
+
+	public int getHeight() {
+		return this.height;
+	}
+
+	public int getWidth() {
+		return this.width;
+	}
+
+	public CollisionRect getCollisionRect() {
+		return this.rect;
+	}
+
+	public void setAlive(boolean b) {
+		this.alive = b;
+	}
+
+	public boolean isAlive() {
+		return this.alive;
 	}
 }

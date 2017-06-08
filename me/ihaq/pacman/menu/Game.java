@@ -19,18 +19,18 @@ import me.ihaq.pacman.utils.CollisionRect;
 
 public class Game {
 
-	public SpriteBatch batch;
-	public Texture background;
-	public PacMan pacMan;
+	public static SpriteBatch batch;
+	public static Texture background;
+	public static PacMan pacMan;
 	public static boolean playing;
-	public int rotation;
+	public static int rotation;
 	public static ArrayList<CollisionRect> boxes;
 	public static ArrayList<Tic> tic;
 	public static ArrayList<PowerUp> powerUp;
 	public static ArrayList<Ghost> ghosts;
 	public static int score;
-	public ShapeRenderer shapeRenderer;
-	public BitmapFont font;
+	public static ShapeRenderer shapeRenderer;
+	public static BitmapFont font;
 	public static boolean invincilbe = false;
 
 	public Game() {
@@ -45,9 +45,8 @@ public class Game {
 		tic = new ArrayList<Tic>();
 		powerUp = new ArrayList<PowerUp>();
 		ghosts = new ArrayList<Ghost>();
-		createItems();
+		createEntities();
 		createBoundaries();
-		createGhosts();
 	}
 
 	public void render() {
@@ -56,26 +55,20 @@ public class Game {
 		batch.begin();
 		batch.draw(background, 0, 0);
 		pacMan.render(batch);
-		renderGhosts(batch);
-		renderItems(batch);
-		renderBoundaries();
+		renderEntitis(batch);
 		font.getData().setScale(2F);
-		font.draw(batch, "" + score, 22, 595);
+		font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(), 22, 595);
+		int mouseX = Gdx.input.getX();
+		int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+		System.out.println(mouseX + " , " + mouseY);
 		batch.end();
 	}
 
-	private void createGhosts() {
-		ghosts.add(new Ghost(new Texture("game/ghostO.png"), 475, 158));
-	}
+	private void createEntities() {
+		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 377, 376));
 
-	private void renderGhosts(SpriteBatch batch) {
-		for (Ghost g : ghosts) {
-			g.render(batch);
-		}
-	}
-
-	private void createItems() {
 		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 308, 105));
+
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 125));
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 145));
@@ -170,12 +163,15 @@ public class Game {
 		tic.add(new Tic(new Texture("game/tic.png"), 208, 105));
 	}
 
-	private void renderItems(SpriteBatch batch) {
+	private void renderEntitis(SpriteBatch batch) {
 		for (PowerUp p : powerUp) {
 			p.render(batch);
 		}
 		for (Tic t : tic) {
 			t.render(batch);
+		}
+		for (Ghost g : ghosts) {
+			g.render(batch);
 		}
 	}
 
@@ -216,11 +212,15 @@ public class Game {
 		boxes.add(new CollisionRect(560, 612, 663, 656));
 		boxes.add(new CollisionRect(708, 612, 787, 656));
 		boxes.add(new CollisionRect(410, 336, 588, 426));
+		boxes.add(new CollisionRect(154, 3, 843, 15));
+		boxes.add(new CollisionRect(154, 3, 164, 713));
+		boxes.add(new CollisionRect(833, 3, 843, 713));
+		boxes.add(new CollisionRect(154, 702, 843, 713));
 	}
 
 	private void renderBoundaries() {
 		shapeRenderer.begin(ShapeType.Filled);
-		for (CollisionRect r : boxes) {	
+		for (CollisionRect r : boxes) {
 			shapeRenderer.setColor(Color.RED);
 			shapeRenderer.rect(r.x, r.y, r.width, r.height);
 		}

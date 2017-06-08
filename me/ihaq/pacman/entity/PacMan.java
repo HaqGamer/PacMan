@@ -12,9 +12,10 @@ import me.ihaq.pacman.utils.CollisionRect;
 
 public class PacMan {
 
-	public int x, y, height, width;
+	private int x, y, height, width;
 	private Sprite pacman;
 	private FACING facing;
+	private CollisionRect pac;;
 
 	public PacMan(Texture t, int x, int y) {
 		pacman = new Sprite(t);
@@ -23,17 +24,19 @@ public class PacMan {
 		this.width = t.getWidth();
 		this.height = t.getHeight();
 		this.facing = FACING.RIGHT;
+		this.pac = new CollisionRect(x, y, x + this.width, y + this.height);
 
 	}
 
 	public void render(SpriteBatch batch) {
-		pacman.setPosition(x, y);
-		pacman.draw(batch);
-		
+		this.pacman.setPosition(this.x, this.y);
+		this.pacman.draw(batch);
+		this.pac = new CollisionRect(this.x, this.y, this.x + this.width, this.y + this.height);
+
 		// Teleportation
-		if (x == 195 && y < 440 && y > 340) {
+		if (this.x == 195 && this.y < 440 && this.y > 340) {
 			this.x = 750;
-		} else if (x == 750 && y < 440 && y > 340) {
+		} else if (this.x == 750 && this.y < 440 && this.y > 340) {
 			this.x = 234;
 		}
 
@@ -42,62 +45,56 @@ public class PacMan {
 				|| Game.playing == true) {
 			Game.playing = true;
 
-			if (Gdx.input.isKeyJustPressed(Keys.LEFT)) {
-				rotate(Keys.LEFT);
-			} else if (Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
-				rotate(Keys.RIGHT);
-			} else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
-				rotate(Keys.UP);
-			} else if (Gdx.input.isKeyJustPressed(Keys.DOWN)) {
-				rotate(Keys.DOWN);
-			}
+			checkForRotation();
 
-			if (this.facing == FACING.UP && (y + 1 + height) < 704 && !collides(x, y + 2)) {
-				this.y += 2;
-			}
+			this.y = this.facing == FACING.UP && !collides(this.x, this.y + 2) ? this.y + 2 : this.y;
+			this.y = this.facing == FACING.DOWN && !collides(this.x, this.y - 2) ? this.y - 2 : this.y;
+			this.x = this.facing == FACING.RIGHT && !collides(this.x + 2, this.y) ? this.x + 2 : this.x;
+			this.x = this.facing == FACING.LEFT && !collides(this.x - 2, this.y) ? this.x - 2 : this.x;
 
-			else if (this.facing == FACING.DOWN && y - 2 > 17 && !collides(x, y - 2)) {
-				this.y -= 2;
-			}
-
-			else if (this.facing == FACING.RIGHT && (x + 2 + width) < 832 && !collides(x + 2, y)) {
-				this.x += 2;
-			}
-
-			else if (this.facing == FACING.LEFT && x - 2 > 163 && !collides(x - 2, y)) {
-				this.x -= 2;
-			}
-
+			ticCollide();
+			cherryCollide();
+			ghostCollide();
 		}
-		ticCollide(x, y);
-		cherryCollide(x, y);
+	}
+
+	public void checkForRotation() {
+		if (Gdx.input.isKeyJustPressed(Keys.LEFT)) {
+			rotate(Keys.LEFT);
+		} else if (Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
+			rotate(Keys.RIGHT);
+		} else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
+			rotate(Keys.UP);
+		} else if (Gdx.input.isKeyJustPressed(Keys.DOWN)) {
+			rotate(Keys.DOWN);
+		}
 	}
 
 	public void rotate(int key) {
 		float rotation = pacman.getRotation();
 		boolean flipedY = pacman.isFlipY();
 		if (key == Keys.DOWN) {
-			facing = FACING.DOWN;
+			this.facing = FACING.DOWN;
 			if (flipedY) {
-				pacman.setFlip(false, false);
+				this.pacman.setFlip(false, false);
 			}
-			pacman.rotate((270 - rotation));
+			this.pacman.rotate((270 - rotation));
 		} else if (key == Keys.UP) {
 			if (flipedY) {
-				pacman.setFlip(false, false);
+				this.pacman.setFlip(false, false);
 			}
-			facing = FACING.UP;
-			pacman.rotate((90 - rotation));
+			this.facing = FACING.UP;
+			this.pacman.rotate((90 - rotation));
 		} else if (key == Keys.RIGHT) {
 			if (flipedY) {
-				pacman.setFlip(false, false);
+				this.pacman.setFlip(false, false);
 			}
-			facing = FACING.RIGHT;
-			pacman.rotate((360 - rotation));
+			this.facing = FACING.RIGHT;
+			this.pacman.rotate((360 - rotation));
 		} else if (key == Keys.LEFT) {
-			pacman.setFlip(false, true);
-			facing = FACING.LEFT;
-			pacman.rotate((180 - rotation));
+			this.pacman.setFlip(false, true);
+			this.facing = FACING.LEFT;
+			this.pacman.rotate((180 - rotation));
 		}
 	}
 
@@ -124,24 +121,10 @@ public class PacMan {
 		return false;
 	}
 
-	public void ticCollide(int x, int y) {
-		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
+	public void ticCollide() {
 		for (Tic r : Game.tic) {
 			if (r.isAlive()) {
-				if (r.getCollisionRect().collidesWith(pac)) {
-					Game.score++;
-					r.setAlive(false);
-				}
-			}
-		}
-
-	}
-	
-	public void ghostCollide(int x, int y) {
-		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
-		for (Tic r : Game.tic) {
-			if (r.isAlive()) {
-				if (r.getCollisionRect().collidesWith(pac)) {
+				if (r.getCollisionRect().collidesWith(this.pac)) {
 					Game.score++;
 					r.setAlive(false);
 				}
@@ -150,13 +133,24 @@ public class PacMan {
 
 	}
 
-	public void cherryCollide(int x, int y) {
-		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
-		for (Ghost r : Game.ghosts) {
+	public void cherryCollide() {
+		for (Tic r : Game.tic) {
 			if (r.isAlive()) {
-				if (r.getCollisionRect().collidesWith(pac)) {
-					Game.invincilbe = true;
+				if (r.getCollisionRect().collidesWith(this.pac)) {
+					Game.score++;
 					r.setAlive(false);
+				}
+			}
+		}
+
+	}
+
+	public void ghostCollide() {
+		for (Ghost g : Game.ghosts) {
+			if (g.isAlive()) {
+				if (g.getCollisionRect().collidesWith(this.pac)) {
+					Game.invincilbe = false;
+					g.setAlive(false);
 				}
 			}
 		}
