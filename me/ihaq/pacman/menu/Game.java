@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
+import me.ihaq.pacman.entity.Ghost;
 import me.ihaq.pacman.entity.PacMan;
 import me.ihaq.pacman.entity.PowerUp;
 import me.ihaq.pacman.entity.Tic;
@@ -26,6 +27,7 @@ public class Game {
 	public static ArrayList<CollisionRect> boxes;
 	public static ArrayList<Tic> tic;
 	public static ArrayList<PowerUp> powerUp;
+	public static ArrayList<Ghost> ghosts;
 	public static int score;
 	public ShapeRenderer shapeRenderer;
 	public BitmapFont font;
@@ -42,8 +44,10 @@ public class Game {
 		boxes = new ArrayList<CollisionRect>();
 		tic = new ArrayList<Tic>();
 		powerUp = new ArrayList<PowerUp>();
-		createTics();
+		ghosts = new ArrayList<Ghost>();
+		createItems();
 		createBoundaries();
+		createGhosts();
 	}
 
 	public void render() {
@@ -51,14 +55,26 @@ public class Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(background, 0, 0);
-		pacMan.render(batch, pacMan.x, pacMan.y);
-		renderTics(batch);
+		pacMan.render(batch);
+		renderGhosts(batch);
+		renderItems(batch);
+		renderBoundaries();
 		font.getData().setScale(2F);
 		font.draw(batch, "" + score, 22, 595);
 		batch.end();
 	}
 
-	public void createTics() {
+	private void createGhosts() {
+		ghosts.add(new Ghost(new Texture("game/ghostO.png"), 475, 158));
+	}
+
+	private void renderGhosts(SpriteBatch batch) {
+		for (Ghost g : ghosts) {
+			g.render(batch);
+		}
+	}
+
+	private void createItems() {
 		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 308, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 125));
@@ -154,7 +170,7 @@ public class Game {
 		tic.add(new Tic(new Texture("game/tic.png"), 208, 105));
 	}
 
-	public void renderTics(SpriteBatch batch) {
+	private void renderItems(SpriteBatch batch) {
 		for (PowerUp p : powerUp) {
 			p.render(batch);
 		}
@@ -163,7 +179,7 @@ public class Game {
 		}
 	}
 
-	public void createBoundaries() {
+	private void createBoundaries() {
 		boxes.add(new CollisionRect(409, 130, 589, 151));
 		boxes.add(new CollisionRect(482, 62, 515, 130));
 		boxes.add(new CollisionRect(210, 62, 438, 82));
@@ -202,13 +218,17 @@ public class Game {
 		boxes.add(new CollisionRect(410, 336, 588, 426));
 	}
 
-	public void renderBoundaries() {
-		for (CollisionRect r : boxes) {
-			shapeRenderer.begin(ShapeType.Filled);
+	private void renderBoundaries() {
+		shapeRenderer.begin(ShapeType.Filled);
+		for (CollisionRect r : boxes) {	
 			shapeRenderer.setColor(Color.RED);
 			shapeRenderer.rect(r.x, r.y, r.width, r.height);
-			shapeRenderer.end();
 		}
+		shapeRenderer.end();
+	}
+
+	public enum FACING {
+		UP, DOWN, RIGHT, LEFT
 	}
 
 }

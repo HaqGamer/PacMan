@@ -15,18 +15,18 @@ public class MainMenu {
 	private SpriteBatch batch;
 	private Texture logo;
 	private Music music;
-	private ImageButton play, playHovered, options, optionsHovered, quit, quitHovered;
+	private ImageButton play, playHovered, quit, quitHovered;
 
 	public MainMenu() {
 		batch = new SpriteBatch();
 		logo = new Texture("mainmenu/logo.png");
 		music = Gdx.audio.newMusic(Gdx.files.internal("mainmenu/mainmenusong.mp3"));
-		play = new ImageButton(new Texture("mainmenu/buttons/play.png"), 335, 363, 312, 105);
-		playHovered = new ImageButton(new Texture("mainmenu/buttons/playHOVERED.png"), 335, 363, 312, 105);
-		options = new ImageButton(new Texture("mainmenu/buttons/options.png"), 258, 260, 454, 105);
-		optionsHovered = new ImageButton(new Texture("mainmenu/buttons/optionsHOVERED.png"), 258, 260, 454, 105);
-		quit = new ImageButton(new Texture("mainmenu/buttons/quit.png"), 348, 157, 270, 105);
-		quitHovered = new ImageButton(new Texture("mainmenu/buttons/quitHOVERED.png"), 348, 157, 270, 105);
+		play = new ImageButton(new Texture("mainmenu/buttons/play.png"), 335, 303, 312, 105);
+		playHovered = new ImageButton(new Texture("mainmenu/buttons/playHOVERED.png"), 335, 303, 312, 105);
+/*		options = new ImageButton(new Texture("mainmenu/buttons/options.png"), 258, 260, 454, 105);
+		optionsHovered = new ImageButton(new Texture("mainmenu/buttons/optionsHOVERED.png"), 258, 260, 454, 105);*/
+		quit = new ImageButton(new Texture("mainmenu/buttons/quit.png"), 335, 200, 270, 105);
+		quitHovered = new ImageButton(new Texture("mainmenu/buttons/quitHOVERED.png"), 335, 200, 270, 105);
 	}
 
 	public void render() {
@@ -41,7 +41,7 @@ public class MainMenu {
 		batch.begin();
 		batch.draw(logo, 0, 0);
 		play.update(batch);
-		options.update(batch);
+/*		options.update(batch);*/
 		quit.update(batch);
 		if (play.isHovered(mouseX, mouseY)) {
 			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -49,12 +49,12 @@ public class MainMenu {
 			}
 			playHovered.update(batch);
 		}
-		if (options.isHovered(mouseX, mouseY)) {
+/*		if (options.isHovered(mouseX, mouseY)) {
 			optionsHovered.update(batch);
 			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 				Main.state = STATE.OPTIONS;
 			}
-		}
+		}*/
 		if (quit.isHovered(mouseX, mouseY)) {
 			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 				System.exit(0);

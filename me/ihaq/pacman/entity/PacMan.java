@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import me.ihaq.pacman.menu.Game;
+import me.ihaq.pacman.menu.Game.FACING;
 import me.ihaq.pacman.utils.CollisionRect;
 
 public class PacMan {
@@ -25,16 +26,10 @@ public class PacMan {
 
 	}
 
-	public enum FACING {
-		UP, DOWN, RIGHT, LEFT
-	}
-
-	public void render(SpriteBatch batch, int x, int y) {
+	public void render(SpriteBatch batch) {
 		pacman.setPosition(x, y);
 		pacman.draw(batch);
-		this.x = x;
-		this.y = y;
-
+		
 		// Teleportation
 		if (x == 195 && y < 440 && y > 340) {
 			this.x = 750;
@@ -57,19 +52,19 @@ public class PacMan {
 				rotate(Keys.DOWN);
 			}
 
-			if (getFacing() == FACING.UP && (y + 1 + height) < 704 && !collides(x, y + 2)) {
+			if (this.facing == FACING.UP && (y + 1 + height) < 704 && !collides(x, y + 2)) {
 				this.y += 2;
 			}
 
-			else if (getFacing() == FACING.DOWN && y - 2 > 17 && !collides(x, y - 2)) {
+			else if (this.facing == FACING.DOWN && y - 2 > 17 && !collides(x, y - 2)) {
 				this.y -= 2;
 			}
 
-			else if (getFacing() == FACING.RIGHT && (x + 2 + width) < 832 && !collides(x + 2, y)) {
+			else if (this.facing == FACING.RIGHT && (x + 2 + width) < 832 && !collides(x + 2, y)) {
 				this.x += 2;
 			}
 
-			else if (getFacing() == FACING.LEFT && x - 2 > 163 && !collides(x - 2, y)) {
+			else if (this.facing == FACING.LEFT && x - 2 > 163 && !collides(x - 2, y)) {
 				this.x -= 2;
 			}
 
@@ -114,10 +109,6 @@ public class PacMan {
 		return this.width;
 	}
 
-	public FACING getFacing() {
-		return this.facing;
-	}
-
 	public boolean collides(int x, int y) {
 		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
 		/*
@@ -145,10 +136,23 @@ public class PacMan {
 		}
 
 	}
+	
+	public void ghostCollide(int x, int y) {
+		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
+		for (Tic r : Game.tic) {
+			if (r.isAlive()) {
+				if (r.getCollisionRect().collidesWith(pac)) {
+					Game.score++;
+					r.setAlive(false);
+				}
+			}
+		}
+
+	}
 
 	public void cherryCollide(int x, int y) {
 		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
-		for (PowerUp r : Game.powerUp) {
+		for (Ghost r : Game.ghosts) {
 			if (r.isAlive()) {
 				if (r.getCollisionRect().collidesWith(pac)) {
 					Game.invincilbe = true;
