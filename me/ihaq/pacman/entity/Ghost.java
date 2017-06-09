@@ -2,8 +2,6 @@ package me.ihaq.pacman.entity;
 
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -75,7 +73,11 @@ public class Ghost {
 		}
 
 		checkForPortals();
+		checkForCollisions();
 
+	}
+
+	private void checkForCollisions() {
 		this.facing = this.facing == FACING.UP && collides(this.x, this.y + 2) || intersectionCollide() ? newDirection()
 				: this.facing;
 		this.facing = this.facing == FACING.DOWN && collides(this.x, this.y - 2) || intersectionCollide()
@@ -84,7 +86,6 @@ public class Ghost {
 				? newDirection() : this.facing;
 		this.facing = this.facing == FACING.LEFT && collides(this.x - 2, this.y) || intersectionCollide()
 				? newDirection() : this.facing;
-
 	}
 
 	private void checkForPortals() {

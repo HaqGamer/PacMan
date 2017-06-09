@@ -42,16 +42,18 @@ public class PacMan {
 
 			checkForPortals();
 			checkForRotation();
-
-			this.y = this.facing == FACING.UP && !collides(this.x, this.y + 2) ? this.y + 2 : this.y;
-			this.y = this.facing == FACING.DOWN && !collides(this.x, this.y - 2) ? this.y - 2 : this.y;
-			this.x = this.facing == FACING.RIGHT && !collides(this.x + 2, this.y) ? this.x + 2 : this.x;
-			this.x = this.facing == FACING.LEFT && !collides(this.x - 2, this.y) ? this.x - 2 : this.x;
-
-			ticCollide();
-			cherryCollide();
-			ghostCollide();
+			checkForCollisions();
 		}
+	}
+
+	private void checkForCollisions() {
+		this.y = this.facing == FACING.UP && !collides(this.x, this.y + 2) ? this.y + 2 : this.y;
+		this.y = this.facing == FACING.DOWN && !collides(this.x, this.y - 2) ? this.y - 2 : this.y;
+		this.x = this.facing == FACING.RIGHT && !collides(this.x + 2, this.y) ? this.x + 2 : this.x;
+		this.x = this.facing == FACING.LEFT && !collides(this.x - 2, this.y) ? this.x - 2 : this.x;
+		ticCollide();
+		cherryCollide();
+		ghostCollide();
 	}
 
 	private void checkForPortals() {

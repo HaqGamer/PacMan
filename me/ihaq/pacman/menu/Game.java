@@ -65,7 +65,7 @@ public class Game {
 		pacMan.render(batch);
 		renderEntitis(batch);
 		font.getData().setScale(2F);
-		font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(), 22, 595);
+		font.draw(batch, "" + score, 22, 595);
 		int mouseX = Gdx.input.getX();
 		int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 		System.out.println(mouseX + " , " + mouseY);
@@ -73,7 +73,7 @@ public class Game {
 	}
 
 	private void createEntities() {
-		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 377, 376));
+		ghosts.add(new Ghost(new Texture("game/ghostO.png"), 377, 376));
 
 		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 308, 105));
 
