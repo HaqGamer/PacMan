@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.ihaq.pacman.menu.Game;
 import me.ihaq.pacman.menu.Game.FACING;
 import me.ihaq.pacman.utils.CollisionRect;
+import me.ihaq.pacman.utils.Intersection;
 
 public class PacMan {
 
@@ -59,14 +60,19 @@ public class PacMan {
 	}
 
 	public void checkForRotation() {
-		if (Gdx.input.isKeyJustPressed(Keys.LEFT)) {
-			rotate(Keys.LEFT);
-		} else if (Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
-			rotate(Keys.RIGHT);
-		} else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
-			rotate(Keys.UP);
-		} else if (Gdx.input.isKeyJustPressed(Keys.DOWN)) {
-			rotate(Keys.DOWN);
+		if (!intersectionCollide()) {
+			return;
+		}
+		for (FACING f : getCollidingIntersection().getDirections()) {
+			if (f == FACING.UP && Gdx.input.isKeyJustPressed(Keys.UP)) {
+				rotate(Keys.UP);
+			} else if (f == FACING.DOWN && Gdx.input.isKeyJustPressed(Keys.DOWN)) {
+				rotate(Keys.DOWN);
+			} else if (f == FACING.RIGHT && Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
+				rotate(Keys.RIGHT);
+			} else if (f == FACING.LEFT && Gdx.input.isKeyJustPressed(Keys.LEFT)) {
+				rotate(Keys.LEFT);
+			}
 		}
 	}
 
@@ -119,6 +125,24 @@ public class PacMan {
 			}
 		}
 		return false;
+	}
+
+	public boolean intersectionCollide() {
+		for (Intersection r : Game.intersections) {
+			if (r.getCollisionRect().collidesWith(this.pac)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Intersection getCollidingIntersection() {
+		for (Intersection r : Game.intersections) {
+			if (r.getCollisionRect().collidesWith(this.pac)) {
+				return r;
+			}
+		}
+		return null;
 	}
 
 	public void ticCollide() {

@@ -24,9 +24,11 @@ public class PowerUp {
 	}
 
 	public void render(SpriteBatch batch) {
-		if (alive) {
-			batch.draw(this.power, this.x, this.y);
+		if (!alive) {
+			return;
 		}
+		batch.draw(this.power, this.x, this.y);
+
 	}
 
 	public int getX() {

@@ -24,9 +24,10 @@ public class Tic {
 	}
 
 	public void render(SpriteBatch batch) {
-		if (alive) {
-			batch.draw(this.tic, this.x, this.y);
+		if(!alive){
+			return;
 		}
+		batch.draw(this.tic, this.x, this.y);
 	}
 
 	public int getX() {

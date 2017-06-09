@@ -1,6 +1,7 @@
 package me.ihaq.pacman.menu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -16,6 +17,7 @@ import me.ihaq.pacman.entity.PacMan;
 import me.ihaq.pacman.entity.PowerUp;
 import me.ihaq.pacman.entity.Tic;
 import me.ihaq.pacman.utils.CollisionRect;
+import me.ihaq.pacman.utils.Intersection;
 
 public class Game {
 
@@ -25,9 +27,11 @@ public class Game {
 	public static boolean playing;
 	public static int rotation;
 	public static ArrayList<CollisionRect> boxes;
+	public static ArrayList<Intersection> intersections;
 	public static ArrayList<Tic> tic;
 	public static ArrayList<PowerUp> powerUp;
 	public static ArrayList<Ghost> ghosts;
+
 	public static int score;
 	public static ShapeRenderer shapeRenderer;
 	public static BitmapFont font;
@@ -42,6 +46,7 @@ public class Game {
 		playing = false;
 		score = 0;
 		boxes = new ArrayList<CollisionRect>();
+		intersections = new ArrayList<Intersection>();
 		tic = new ArrayList<Tic>();
 		powerUp = new ArrayList<PowerUp>();
 		ghosts = new ArrayList<Ghost>();
@@ -56,6 +61,7 @@ public class Game {
 		batch.draw(background, 0, 0);
 		pacMan.render(batch);
 		renderEntitis(batch);
+		renderBoundaries();
 		font.getData().setScale(2F);
 		font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(), 22, 595);
 		int mouseX = Gdx.input.getX();
@@ -176,6 +182,46 @@ public class Game {
 	}
 
 	private void createBoundaries() {
+
+		intersections.add(new Intersection(183, 40, 184, 41, Arrays.asList(FACING.UP, FACING.RIGHT)));
+		intersections.add(new Intersection(458, 40, 459, 41, Arrays.asList(FACING.UP, FACING.RIGHT, FACING.LEFT)));
+		intersections.add(new Intersection(535, 40, 536, 41, Arrays.asList(FACING.UP, FACING.RIGHT, FACING.LEFT)));
+		intersections.add(new Intersection(805, 40, 806, 41, Arrays.asList(FACING.UP, FACING.LEFT)));
+
+		intersections.add(new Intersection(183, 109, 184, 110, Arrays.asList(FACING.RIGHT, FACING.DOWN)));
+		intersections.add(new Intersection(229, 109, 230, 110, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));
+		intersections.add(new Intersection(306, 109, 307, 110, Arrays.asList(FACING.UP, FACING.LEFT)));
+		intersections.add(new Intersection(380, 109, 381, 110, Arrays.asList(FACING.UP, FACING.RIGHT)));
+		intersections.add(new Intersection(455, 109, 456, 110, Arrays.asList(FACING.LEFT, FACING.DOWN)));
+		intersections.add(new Intersection(536, 109, 537, 110, Arrays.asList(FACING.RIGHT, FACING.DOWN)));
+		intersections.add(new Intersection(603, 109, 604, 110, Arrays.asList(FACING.UP, FACING.LEFT)));
+		intersections.add(new Intersection(679, 109, 680, 110, Arrays.asList(FACING.UP, FACING.RIGHT)));
+		intersections.add(new Intersection(757, 109, 758, 110, Arrays.asList(FACING.UP, FACING.RIGHT, FACING.LEFT)));
+		intersections.add(new Intersection(804, 109, 805, 110, Arrays.asList(FACING.DOWN, FACING.LEFT)));
+
+		intersections.add(new Intersection(186, 177, 187, 178, Arrays.asList(FACING.UP, FACING.RIGHT)));
+		intersections.add(new Intersection(230, 177, 231, 178, Arrays.asList(FACING.LEFT, FACING.DOWN)));
+		intersections.add(new Intersection(304, 177, 305, 178, Arrays.asList(FACING.UP, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(382, 177, 383, 178, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(457, 177, 458, 178, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));
+		intersections.add(new Intersection(535, 177, 536, 178, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));
+		intersections.add(new Intersection(603, 177, 604, 178, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(683, 177, 684, 178, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.UP)));
+		intersections.add(new Intersection(760, 177, 761, 178, Arrays.asList(FACING.RIGHT, FACING.DOWN)));
+		intersections.add(new Intersection(805, 177, 806, 178, Arrays.asList(FACING.UP, FACING.LEFT)));
+
+		intersections.add(new Intersection(185, 239, 186, 240, Arrays.asList(FACING.RIGHT, FACING.DOWN)));
+		intersections.add(new Intersection(309, 239, 310, 240, Arrays.asList(FACING.RIGHT, FACING.DOWN, FACING.UP, FACING.LEFT)));
+		intersections.add(new Intersection(385, 239, 386, 240, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));
+		intersections.add(new Intersection(452, 239, 453, 240, Arrays.asList(FACING.LEFT, FACING.DOWN)));
+		intersections.add(new Intersection(537, 239, 538, 240, Arrays.asList(FACING.RIGHT, FACING.DOWN)));
+		intersections.add(new Intersection(607, 239, 608, 240, Arrays.asList(FACING.RIGHT, FACING.UP, FACING.LEFT)));
+		intersections.add(new Intersection(684, 239, 685, 240, Arrays.asList(FACING.RIGHT, FACING.DOWN, FACING.UP, FACING.LEFT)));
+		intersections.add(new Intersection(806, 239, 807, 240, Arrays.asList(FACING.LEFT, FACING.DOWN)));
+		
+		intersections.add(new Intersection(385, 313, 386, 314, Arrays.asList(FACING.UP, FACING.DOWN,FACING.RIGHT)));
+		intersections.add(new Intersection(605, 313, 606, 314, Arrays.asList(FACING.UP, FACING.DOWN,FACING.LEFT)));
+
 		boxes.add(new CollisionRect(409, 130, 589, 151));
 		boxes.add(new CollisionRect(482, 62, 515, 130));
 		boxes.add(new CollisionRect(210, 62, 438, 82));
@@ -223,6 +269,11 @@ public class Game {
 		for (CollisionRect r : boxes) {
 			shapeRenderer.setColor(Color.RED);
 			shapeRenderer.rect(r.x, r.y, r.width, r.height);
+		}
+		for (Intersection r : intersections) {
+			shapeRenderer.setColor(Color.GREEN);
+			shapeRenderer.rect(r.getCollisionRect().x, r.getCollisionRect().y, r.getCollisionRect().width,
+					r.getCollisionRect().height);
 		}
 		shapeRenderer.end();
 	}

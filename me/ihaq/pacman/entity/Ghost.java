@@ -30,13 +30,13 @@ public class Ghost {
 	}
 
 	public void render(SpriteBatch batch) {
-		if (!Game.playing || !this.alive) {
-			return;
-		}
-
 		this.ghost.setPosition(this.x, this.y);
 		this.ghost.draw(batch);
 		this.rect = new CollisionRect(this.x, this.y, this.x + this.width, this.y + this.height);
+		
+		if (!Game.playing) {
+			return;
+		}
 
 		if (this.facing == FACING.UP && !collides(this.x, this.y + 2)) {
 			this.vx = 0;
