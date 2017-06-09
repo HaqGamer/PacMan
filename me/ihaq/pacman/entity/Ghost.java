@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.ihaq.pacman.menu.Game;
 import me.ihaq.pacman.menu.Game.FACING;
 import me.ihaq.pacman.utils.CollisionRect;
+import me.ihaq.pacman.utils.Portal;
 
 public class Ghost {
 
@@ -33,7 +34,7 @@ public class Ghost {
 		this.ghost.setPosition(this.x, this.y);
 		this.ghost.draw(batch);
 		this.rect = new CollisionRect(this.x, this.y, this.x + this.width, this.y + this.height);
-		
+
 		if (!Game.playing) {
 			return;
 		}
@@ -70,11 +71,21 @@ public class Ghost {
 			this.y += this.vy;
 		}
 
+		checkForPortals();
+
 		this.facing = this.facing == FACING.UP && collides(this.x, this.y + 2) ? newDirection() : this.facing;
 		this.facing = this.facing == FACING.DOWN && collides(this.x, this.y - 2) ? newDirection() : this.facing;
 		this.facing = this.facing == FACING.RIGHT && collides(this.x + 2, this.y) ? newDirection() : this.facing;
 		this.facing = this.facing == FACING.LEFT && collides(this.x - 2, this.y) ? newDirection() : this.facing;
 
+	}
+
+	private void checkForPortals() {
+		for (Portal r : Game.portals) {
+			if (r.getCollisionRect().collidesWith(this.rect)) {
+				this.x = r.getTargetX();
+			}
+		}
 	}
 
 	private boolean collides(int x, int y) {

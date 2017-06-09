@@ -18,6 +18,7 @@ import me.ihaq.pacman.entity.PowerUp;
 import me.ihaq.pacman.entity.Tic;
 import me.ihaq.pacman.utils.CollisionRect;
 import me.ihaq.pacman.utils.Intersection;
+import me.ihaq.pacman.utils.Portal;
 
 public class Game {
 
@@ -28,6 +29,7 @@ public class Game {
 	public static int rotation;
 	public static ArrayList<CollisionRect> boxes;
 	public static ArrayList<Intersection> intersections;
+	public static ArrayList<Portal> portals;
 	public static ArrayList<Tic> tic;
 	public static ArrayList<PowerUp> powerUp;
 	public static ArrayList<Ghost> ghosts;
@@ -47,6 +49,7 @@ public class Game {
 		score = 0;
 		boxes = new ArrayList<CollisionRect>();
 		intersections = new ArrayList<Intersection>();
+		portals = new ArrayList<Portal>();
 		tic = new ArrayList<Tic>();
 		powerUp = new ArrayList<PowerUp>();
 		ghosts = new ArrayList<Ghost>();
@@ -61,7 +64,6 @@ public class Game {
 		batch.draw(background, 0, 0);
 		pacMan.render(batch);
 		renderEntitis(batch);
-		renderBoundaries();
 		font.getData().setScale(2F);
 		font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(), 22, 595);
 		int mouseX = Gdx.input.getX();
@@ -183,6 +185,9 @@ public class Game {
 
 	private void createBoundaries() {
 
+		portals.add(new Portal(192, 381, 193, 382, 753));
+		portals.add(new Portal(795, 382, 796, 383, 237));
+
 		intersections.add(new Intersection(183, 40, 184, 41, Arrays.asList(FACING.UP, FACING.RIGHT)));
 		intersections.add(new Intersection(458, 40, 459, 41, Arrays.asList(FACING.UP, FACING.RIGHT, FACING.LEFT)));
 		intersections.add(new Intersection(535, 40, 536, 41, Arrays.asList(FACING.UP, FACING.RIGHT, FACING.LEFT)));
@@ -205,22 +210,63 @@ public class Game {
 		intersections.add(new Intersection(382, 177, 383, 178, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.RIGHT)));
 		intersections.add(new Intersection(457, 177, 458, 178, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));
 		intersections.add(new Intersection(535, 177, 536, 178, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));
-		intersections.add(new Intersection(603, 177, 604, 178, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(607, 177, 608, 178, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.RIGHT)));
 		intersections.add(new Intersection(683, 177, 684, 178, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.UP)));
 		intersections.add(new Intersection(760, 177, 761, 178, Arrays.asList(FACING.RIGHT, FACING.DOWN)));
 		intersections.add(new Intersection(805, 177, 806, 178, Arrays.asList(FACING.UP, FACING.LEFT)));
 
 		intersections.add(new Intersection(185, 239, 186, 240, Arrays.asList(FACING.RIGHT, FACING.DOWN)));
-		intersections.add(new Intersection(309, 239, 310, 240, Arrays.asList(FACING.RIGHT, FACING.DOWN, FACING.UP, FACING.LEFT)));
+		intersections.add(
+				new Intersection(309, 239, 310, 240, Arrays.asList(FACING.RIGHT, FACING.DOWN, FACING.UP, FACING.LEFT)));
 		intersections.add(new Intersection(385, 239, 386, 240, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));
 		intersections.add(new Intersection(452, 239, 453, 240, Arrays.asList(FACING.LEFT, FACING.DOWN)));
 		intersections.add(new Intersection(537, 239, 538, 240, Arrays.asList(FACING.RIGHT, FACING.DOWN)));
 		intersections.add(new Intersection(607, 239, 608, 240, Arrays.asList(FACING.RIGHT, FACING.UP, FACING.LEFT)));
-		intersections.add(new Intersection(684, 239, 685, 240, Arrays.asList(FACING.RIGHT, FACING.DOWN, FACING.UP, FACING.LEFT)));
+		intersections.add(
+				new Intersection(684, 239, 685, 240, Arrays.asList(FACING.RIGHT, FACING.DOWN, FACING.UP, FACING.LEFT)));
 		intersections.add(new Intersection(806, 239, 807, 240, Arrays.asList(FACING.LEFT, FACING.DOWN)));
-		
-		intersections.add(new Intersection(385, 313, 386, 314, Arrays.asList(FACING.UP, FACING.DOWN,FACING.RIGHT)));
-		intersections.add(new Intersection(605, 313, 606, 314, Arrays.asList(FACING.UP, FACING.DOWN,FACING.LEFT)));
+
+		intersections.add(new Intersection(385, 313, 386, 314, Arrays.asList(FACING.UP, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(605, 313, 606, 314, Arrays.asList(FACING.UP, FACING.DOWN, FACING.LEFT)));
+
+		intersections.add(
+				new Intersection(306, 384, 307, 385, Arrays.asList(FACING.UP, FACING.DOWN, FACING.LEFT, FACING.RIGHT)));
+		intersections.add(new Intersection(385, 384, 386, 385, Arrays.asList(FACING.UP, FACING.DOWN, FACING.LEFT)));
+		intersections.add(new Intersection(609, 384, 610, 385, Arrays.asList(FACING.UP, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(
+				new Intersection(686, 384, 687, 385, Arrays.asList(FACING.UP, FACING.DOWN, FACING.LEFT, FACING.RIGHT)));
+
+		intersections.add(new Intersection(388, 448, 389, 449, Arrays.asList(FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(458, 448, 459, 449, Arrays.asList(FACING.UP, FACING.RIGHT, FACING.LEFT)));
+		intersections.add(new Intersection(537, 448, 538, 449, Arrays.asList(FACING.UP, FACING.RIGHT, FACING.LEFT)));
+		intersections.add(new Intersection(607, 448, 608, 449, Arrays.asList(FACING.DOWN, FACING.LEFT)));
+
+		intersections.add(new Intersection(185, 521, 186, 522, Arrays.asList(FACING.UP, FACING.RIGHT)));
+		intersections.add(new Intersection(305, 521, 306, 522, Arrays.asList(FACING.UP, FACING.DOWN, FACING.LEFT)));
+		intersections.add(new Intersection(386, 521, 387, 522, Arrays.asList(FACING.UP, FACING.RIGHT)));
+		intersections.add(new Intersection(455, 521, 456, 522, Arrays.asList(FACING.LEFT, FACING.DOWN)));
+		intersections.add(new Intersection(534, 521, 535, 522, Arrays.asList(FACING.RIGHT, FACING.DOWN)));
+		intersections.add(new Intersection(607, 521, 608, 522, Arrays.asList(FACING.UP, FACING.LEFT)));
+		intersections.add(new Intersection(689, 521, 690, 522, Arrays.asList(FACING.UP, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(807, 521, 808, 522, Arrays.asList(FACING.UP, FACING.LEFT)));
+
+		intersections.add(new Intersection(186, 592, 187, 593, Arrays.asList(FACING.UP, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(
+				new Intersection(310, 592, 311, 593, Arrays.asList(FACING.RIGHT, FACING.DOWN, FACING.UP, FACING.LEFT)));
+		intersections.add(new Intersection(387, 592, 388, 593, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(460, 592, 461, 593, Arrays.asList(FACING.LEFT, FACING.UP, FACING.RIGHT)));
+		intersections.add(new Intersection(538, 592, 539, 593, Arrays.asList(FACING.LEFT, FACING.UP, FACING.RIGHT)));
+		intersections.add(new Intersection(609, 592, 610, 593, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(
+				new Intersection(687, 592, 688, 593, Arrays.asList(FACING.RIGHT, FACING.DOWN, FACING.UP, FACING.LEFT)));
+		intersections.add(new Intersection(809, 592, 810, 593, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.UP)));
+
+		intersections.add(new Intersection(192, 682, 193, 683, Arrays.asList(FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(310, 682, 311, 683, Arrays.asList(FACING.DOWN, FACING.RIGHT, FACING.LEFT)));
+		intersections.add(new Intersection(456, 682, 457, 683, Arrays.asList(FACING.DOWN, FACING.LEFT)));
+		intersections.add(new Intersection(540, 682, 541, 683, Arrays.asList(FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(682, 682, 683, 683, Arrays.asList(FACING.DOWN, FACING.RIGHT, FACING.LEFT)));
+		intersections.add(new Intersection(807, 682, 808, 683, Arrays.asList(FACING.DOWN, FACING.LEFT)));
 
 		boxes.add(new CollisionRect(409, 130, 589, 151));
 		boxes.add(new CollisionRect(482, 62, 515, 130));

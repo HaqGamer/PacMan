@@ -10,6 +10,7 @@ import me.ihaq.pacman.menu.Game;
 import me.ihaq.pacman.menu.Game.FACING;
 import me.ihaq.pacman.utils.CollisionRect;
 import me.ihaq.pacman.utils.Intersection;
+import me.ihaq.pacman.utils.Portal;
 
 public class PacMan {
 
@@ -34,18 +35,12 @@ public class PacMan {
 		this.pacman.draw(batch);
 		this.pac = new CollisionRect(this.x, this.y, this.x + this.width, this.y + this.height);
 
-		// Teleportation
-		if (this.x == 195 && this.y < 440 && this.y > 340) {
-			this.x = 750;
-		} else if (this.x == 750 && this.y < 440 && this.y > 340) {
-			this.x = 234;
-		}
-
 		if (Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.RIGHT)
 				|| Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.DOWN)
 				|| Game.playing == true) {
 			Game.playing = true;
 
+			checkForPortals();
 			checkForRotation();
 
 			this.y = this.facing == FACING.UP && !collides(this.x, this.y + 2) ? this.y + 2 : this.y;
@@ -59,7 +54,15 @@ public class PacMan {
 		}
 	}
 
-	public void checkForRotation() {
+	private void checkForPortals() {
+		for (Portal r : Game.portals) {
+			if (r.getCollisionRect().collidesWith(this.pac)) {
+				this.x = r.getTargetX();
+			}
+		}
+	}
+
+	private void checkForRotation() {
 		if (!intersectionCollide()) {
 			return;
 		}
@@ -76,7 +79,7 @@ public class PacMan {
 		}
 	}
 
-	public void rotate(int key) {
+	private void rotate(int key) {
 		float rotation = pacman.getRotation();
 		boolean flipedY = pacman.isFlipY();
 		if (key == Keys.DOWN) {
@@ -104,15 +107,7 @@ public class PacMan {
 		}
 	}
 
-	public int getHeight() {
-		return this.height;
-	}
-
-	public int getWidth() {
-		return this.width;
-	}
-
-	public boolean collides(int x, int y) {
+	private boolean collides(int x, int y) {
 		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
 		/*
 		 * shapeRenderer.begin(ShapeType.Filled);
@@ -127,7 +122,7 @@ public class PacMan {
 		return false;
 	}
 
-	public boolean intersectionCollide() {
+	private boolean intersectionCollide() {
 		for (Intersection r : Game.intersections) {
 			if (r.getCollisionRect().collidesWith(this.pac)) {
 				return true;
@@ -136,7 +131,7 @@ public class PacMan {
 		return false;
 	}
 
-	public Intersection getCollidingIntersection() {
+	private Intersection getCollidingIntersection() {
 		for (Intersection r : Game.intersections) {
 			if (r.getCollisionRect().collidesWith(this.pac)) {
 				return r;
@@ -145,7 +140,7 @@ public class PacMan {
 		return null;
 	}
 
-	public void ticCollide() {
+	private void ticCollide() {
 		for (Tic r : Game.tic) {
 			if (r.isAlive()) {
 				if (r.getCollisionRect().collidesWith(this.pac)) {
@@ -157,7 +152,7 @@ public class PacMan {
 
 	}
 
-	public void cherryCollide() {
+	private void cherryCollide() {
 		for (Tic r : Game.tic) {
 			if (r.isAlive()) {
 				if (r.getCollisionRect().collidesWith(this.pac)) {
@@ -169,7 +164,7 @@ public class PacMan {
 
 	}
 
-	public void ghostCollide() {
+	private void ghostCollide() {
 		for (Ghost g : Game.ghosts) {
 			if (g.isAlive()) {
 				if (g.getCollisionRect().collidesWith(this.pac)) {
