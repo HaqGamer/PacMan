@@ -2,6 +2,8 @@ package me.ihaq.pacman.entity;
 
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.ihaq.pacman.menu.Game;
 import me.ihaq.pacman.menu.Game.FACING;
 import me.ihaq.pacman.utils.CollisionRect;
+import me.ihaq.pacman.utils.Intersection;
 import me.ihaq.pacman.utils.Portal;
 
 public class Ghost {
@@ -73,10 +76,14 @@ public class Ghost {
 
 		checkForPortals();
 
-		this.facing = this.facing == FACING.UP && collides(this.x, this.y + 2) ? newDirection() : this.facing;
-		this.facing = this.facing == FACING.DOWN && collides(this.x, this.y - 2) ? newDirection() : this.facing;
-		this.facing = this.facing == FACING.RIGHT && collides(this.x + 2, this.y) ? newDirection() : this.facing;
-		this.facing = this.facing == FACING.LEFT && collides(this.x - 2, this.y) ? newDirection() : this.facing;
+		this.facing = this.facing == FACING.UP && collides(this.x, this.y + 2) || intersectionCollide() ? newDirection()
+				: this.facing;
+		this.facing = this.facing == FACING.DOWN && collides(this.x, this.y - 2) || intersectionCollide()
+				? newDirection() : this.facing;
+		this.facing = this.facing == FACING.RIGHT && collides(this.x + 2, this.y) || intersectionCollide()
+				? newDirection() : this.facing;
+		this.facing = this.facing == FACING.LEFT && collides(this.x - 2, this.y) || intersectionCollide()
+				? newDirection() : this.facing;
 
 	}
 
@@ -96,6 +103,24 @@ public class Ghost {
 			}
 		}
 		return false;
+	}
+
+	private boolean intersectionCollide() {
+		for (Intersection r : Game.intersections) {
+			if (r.getCollisionRect().collidesWith(this.rect)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private Intersection getCollidingIntersection() {
+		for (Intersection r : Game.intersections) {
+			if (r.getCollisionRect().collidesWith(this.rect)) {
+				return r;
+			}
+		}
+		return null;
 	}
 
 	private FACING newDirection() {
