@@ -15,9 +15,10 @@ import me.ihaq.pacman.utils.Portal;
 public class PacMan {
 
 	private int x, y, height, width;
+	private boolean invinceble;
 	private Sprite pacman;
 	private FACING facing;
-	private CollisionRect pac;;
+	private CollisionRect pac;
 
 	public PacMan(Texture t, int x, int y) {
 		pacman = new Sprite(t);
@@ -155,10 +156,9 @@ public class PacMan {
 	}
 
 	private void cherryCollide() {
-		for (Tic r : Game.tic) {
+		for (PowerUp r : Game.powerUp) {
 			if (r.isAlive()) {
 				if (r.getCollisionRect().collidesWith(this.pac)) {
-					Game.score++;
 					r.setAlive(false);
 				}
 			}
@@ -176,6 +176,14 @@ public class PacMan {
 			}
 		}
 
+	}
+
+	public boolean isInvinceble() {
+		return this.invinceble;
+	}
+
+	public void setInvinceble(boolean invinceble) {
+		this.invinceble = invinceble;
 	}
 
 }

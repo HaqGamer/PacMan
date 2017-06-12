@@ -32,6 +32,10 @@ public class Ghost {
 	}
 
 	public void render(SpriteBatch batch) {
+		if (!alive) {
+			return;
+		}
+		
 		this.ghost.setPosition(this.x, this.y);
 		this.ghost.draw(batch);
 		this.rect = new CollisionRect(this.x, this.y, this.x + this.width, this.y + this.height);
@@ -125,17 +129,9 @@ public class Ghost {
 	}
 
 	private FACING newDirection() {
-		int newMove = new Random().nextInt(4);
-		if (newMove == 0) { // UP
-			return FACING.UP;
-		} else if (newMove == 1) { // DOWN
-			return FACING.DOWN;
-		} else if (newMove == 2) { // RIGHT
-			return FACING.RIGHT;
-		} else { // LEFT
-			return FACING.LEFT;
-		}
-
+		Intersection i = getCollidingIntersection();
+		int newMove = new Random().nextInt(i.getDirections().size() - 1);
+		return i.getDirections().get(newMove);
 	}
 
 	public int getX() {

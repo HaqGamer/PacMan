@@ -33,11 +33,9 @@ public class Main extends ApplicationAdapter {
 		}
 		if (state == STATE.MENU) {
 			MENU.render();
-		}else if(state == STATE.HOWTOPLAY){
+		} else if (state == STATE.HOWTOPLAY) {
 			HOWTOPLAY.render();
-		}
-		else if (state == STATE.GAME) {
-			
+		} else if (state == STATE.GAME) {
 			GAME.render();
 		}
 	}
