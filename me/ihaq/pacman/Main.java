@@ -9,9 +9,10 @@ import me.ihaq.pacman.menu.HowToPlayMenu;
 import me.ihaq.pacman.menu.MainMenu;
 
 public class Main extends ApplicationAdapter {
-	public MainMenu MENU;
-	public HowToPlayMenu HOWTOPLAY;
-	public Game GAME;
+	private MainMenu MENU;
+	private HowToPlayMenu HOWTOPLAY;
+	private Game GAME;
+	private boolean clicked;
 	public static STATE state;
 
 	public enum STATE {
@@ -22,7 +23,6 @@ public class Main extends ApplicationAdapter {
 	public void create() {
 		MENU = new MainMenu();
 		HOWTOPLAY = new HowToPlayMenu();
-		GAME = new Game();
 		state = STATE.MENU;
 	}
 
@@ -30,12 +30,17 @@ public class Main extends ApplicationAdapter {
 	public void render() {
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
 			state = STATE.MENU;
+			clicked = false;
 		}
 		if (state == STATE.MENU) {
 			MENU.render();
 		} else if (state == STATE.HOWTOPLAY) {
 			HOWTOPLAY.render();
-		} else if (state == STATE.GAME) {
+		} else if (state == STATE.GAME && clicked == false) {
+			GAME = new Game();
+			GAME.render();
+			clicked = true;
+		}else if (state == STATE.GAME && clicked == true) {
 			GAME.render();
 		}
 	}
