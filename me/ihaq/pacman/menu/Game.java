@@ -107,7 +107,7 @@ public class Game {
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 645));
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 665));
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 685));
-
+		
 		tic.add(new Tic(new Texture("game/tic.png"), 688, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 688, 125));
 		tic.add(new Tic(new Texture("game/tic.png"), 688, 145));
@@ -139,36 +139,87 @@ public class Game {
 		tic.add(new Tic(new Texture("game/tic.png"), 688, 665));
 		tic.add(new Tic(new Texture("game/tic.png"), 688, 685));
 
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 105));
+		tic.add(new Tic(new Texture("game/tic.png"), 728, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 708, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 728, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 748, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 768, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 788, 105));
-		// tic.add(new Tic(new Texture("game/tic.png"), 808, 105));
-		// tic.add(new Tic(new Texture("game/tic.png"), 668, 105));
-		// tic.add(new Tic(new Texture("game/tic.png"), 648, 105));
-		// tic.add(new Tic(new Texture("game/tic.png"), 628, 105));
+		//tic.add(new Tic(new Texture("game/tic.png"), 808, 105));
+		//tic.add(new Tic(new Texture("game/tic.png"), 668, 105));
+		//tic.add(new Tic(new Texture("game/tic.png"), 648, 105));
+		//tic.add(new Tic(new Texture("game/tic.png"), 628, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 608, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 588, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 568, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 548, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 528, 105));
-		// tic.add(new Tic(new Texture("game/tic.png"), 508, 105));
-		// tic.add(new Tic(new Texture("game/tic.png"), 488, 105));
+		//tic.add(new Tic(new Texture("game/tic.png"), 508, 105));
+		//tic.add(new Tic(new Texture("game/tic.png"), 488, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 468, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 448, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 428, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 408, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 388, 105));
-		tic.add(new Tic(new Texture("game/tic.png"), 368, 105));
-		tic.add(new Tic(new Texture("game/tic.png"), 348, 105));
-		tic.add(new Tic(new Texture("game/tic.png"), 328, 105));
+		//tic.add(new Tic(new Texture("game/tic.png"), 368, 105));
+		//tic.add(new Tic(new Texture("game/tic.png"), 348, 105));
+		//tic.add(new Tic(new Texture("game/tic.png"), 328, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 288, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 268, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 248, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 228, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 208, 105));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 105));
+		
+		tic.add(new Tic(new Texture("game/tic.png"), 528, 65));
+		tic.add(new Tic(new Texture("game/tic.png"), 528, 85));
+		tic.add(new Tic(new Texture("game/tic.png"), 468, 65));
+		tic.add(new Tic(new Texture("game/tic.png"), 468, 85));
+		
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 85));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 65));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 45));
+		
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 85));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 65));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 688, 45));
+		
+		
+		
+		tic.add(new Tic(new Texture("game/tic.png"), 788, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 768, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 748, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 728, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 708, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 668, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 648, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 628, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 588, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 568, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 528, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 508, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 488, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 468, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 428, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 408, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 368, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 348, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 328, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 308, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 288, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 268, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 248, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 228, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 208, 45));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 45));
 	}
 
 	private void renderEntitis(SpriteBatch batch) {
