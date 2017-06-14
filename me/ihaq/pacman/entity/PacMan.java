@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import me.ihaq.pacman.Main;
+import me.ihaq.pacman.Main.STATE;
 import me.ihaq.pacman.menu.Game;
 import me.ihaq.pacman.menu.Game.FACING;
 import me.ihaq.pacman.utils.CollisionRect;
@@ -18,19 +20,24 @@ public class PacMan {
 	private Sprite pacman;
 	private FACING facing;
 	private CollisionRect pac;
+	private boolean alive;
 
 	public PacMan(Texture t, int x, int y) {
-		pacman = new Sprite(t);
+		this.pacman = new Sprite(t);
 		this.x = x;
 		this.y = y;
 		this.width = t.getWidth();
 		this.height = t.getHeight();
 		this.facing = FACING.RIGHT;
 		this.pac = new CollisionRect(x, y, x + this.width, y + this.height);
+		this.alive = true;
 
 	}
 
 	public void render(SpriteBatch batch) {
+		if (!this.alive) {
+			return;
+		}
 		this.pacman.setPosition(this.x, this.y);
 		this.pacman.draw(batch);
 		this.pac = new CollisionRect(this.x, this.y, this.x + this.width, this.y + this.height);
@@ -174,8 +181,15 @@ public class PacMan {
 		for (Ghost g : Game.ghosts) {
 			if (g.isAlive()) {
 				if (g.getCollisionRect().collidesWith(this.pac)) {
-					Game.invincilbe = false;
-					g.setAlive(false);
+					if (g.isEatable()) {
+						g.setAlive(false);
+					} else if (!g.isEatable()) {
+						g.setEatable(true);
+					} else {
+						this.alive = false;
+						Main.state = STATE.END;
+					}
+
 				}
 			}
 		}

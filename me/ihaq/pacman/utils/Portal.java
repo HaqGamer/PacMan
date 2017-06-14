@@ -14,7 +14,6 @@ public class Portal {
 		return this.targetX;
 	}
 
-
 	public CollisionRect getCollisionRect() {
 		return this.rect;
 	}

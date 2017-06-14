@@ -17,7 +17,7 @@ public class Ghost {
 	private int x, initialX, initialY, y, height, width, vx, vy;
 	private Sprite ghost;
 	private FACING facing;
-	private boolean alive;
+	private boolean alive, eatable;
 	private CollisionRect rect;
 
 	public Ghost(Texture t, int x, int y) {
@@ -133,7 +133,6 @@ public class Ghost {
 		int newMove = new Random().nextInt(i.getDirections().size() - 1);
 		System.out.println(i.getDirections().get(newMove));
 		return i.getDirections().get(newMove);
-
 	}
 
 	public int getX() {
@@ -162,5 +161,13 @@ public class Ghost {
 
 	public boolean isAlive() {
 		return this.alive;
+	}
+
+	public void setEatable(boolean b) {
+		this.eatable = b;
+	}
+
+	public boolean isEatable() {
+		return this.eatable;
 	}
 }

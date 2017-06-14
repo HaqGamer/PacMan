@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.ihaq.pacman.Main;
 import me.ihaq.pacman.Main.STATE;
 
-public class HowToPlayMenu {
+public class EndMenu {
 
 	private SpriteBatch batch;
 
-	public HowToPlayMenu() {
+	public EndMenu() {
 		batch = new SpriteBatch();
 	}
 
@@ -24,8 +24,11 @@ public class HowToPlayMenu {
 		batch.draw(new Texture("howtoplay/howtoplay.png"), 0, 0);
 		batch.end();
 		if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+			Main.state = STATE.MAIN;
+		} else if (Gdx.input.isKeyPressed(Input.Keys.R)) {
 			Main.state = STATE.GAME;
 		}
+		Main.clicked = false;
 
 	}
 

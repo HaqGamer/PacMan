@@ -22,11 +22,10 @@ import me.ihaq.pacman.utils.Portal;
 
 public class Game {
 
-	public static SpriteBatch batch;
 	public static Texture background;
+	public static SpriteBatch batch;
 	public static PacMan pacMan;
-	public static boolean playing;
-	public static int rotation;
+	public static boolean playing, eatMode;
 	public static ArrayList<CollisionRect> boxes;
 	public static ArrayList<Intersection> intersections;
 	public static ArrayList<Portal> portals;
@@ -37,7 +36,6 @@ public class Game {
 	public static int score;
 	public static ShapeRenderer shapeRenderer;
 	public static BitmapFont font;
-	public static boolean invincilbe = false;
 
 	public Game() {
 		batch = new SpriteBatch();
