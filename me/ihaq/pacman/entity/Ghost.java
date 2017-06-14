@@ -14,7 +14,7 @@ import me.ihaq.pacman.utils.Portal;
 
 public class Ghost {
 
-	private int x, y, height, width, vx, vy;
+	private int x, initialX, initialY, y, height, width, vx, vy;
 	private Sprite ghost;
 	private FACING facing;
 	private boolean alive;
@@ -24,6 +24,8 @@ public class Ghost {
 		this.ghost = new Sprite(t);
 		this.x = x;
 		this.y = y;
+		this.initialX = x;
+		this.initialY = y;
 		this.width = t.getWidth();
 		this.height = t.getHeight();
 		this.facing = FACING.UP;
@@ -33,9 +35,11 @@ public class Ghost {
 
 	public void render(SpriteBatch batch) {
 		if (!alive) {
-			return;
+			alive = true;
+			this.x = initialX;
+			this.y = initialY;
 		}
-		
+
 		this.ghost.setPosition(this.x, this.y);
 		this.ghost.draw(batch);
 		this.rect = new CollisionRect(this.x, this.y, this.x + this.width, this.y + this.height);
@@ -82,14 +86,10 @@ public class Ghost {
 	}
 
 	private void checkForCollisions() {
-		this.facing = this.facing == FACING.UP && collides(this.x, this.y + 2) || intersectionCollide() ? newDirection()
-				: this.facing;
-		this.facing = this.facing == FACING.DOWN && collides(this.x, this.y - 2) || intersectionCollide()
-				? newDirection() : this.facing;
-		this.facing = this.facing == FACING.RIGHT && collides(this.x + 2, this.y) || intersectionCollide()
-				? newDirection() : this.facing;
-		this.facing = this.facing == FACING.LEFT && collides(this.x - 2, this.y) || intersectionCollide()
-				? newDirection() : this.facing;
+		this.facing = intersectionCollide() ? newDirection() : this.facing;
+		this.facing = intersectionCollide() ? newDirection() : this.facing;
+		this.facing = intersectionCollide() ? newDirection() : this.facing;
+		this.facing = intersectionCollide() ? newDirection() : this.facing;
 	}
 
 	private void checkForPortals() {
@@ -131,7 +131,9 @@ public class Ghost {
 	private FACING newDirection() {
 		Intersection i = getCollidingIntersection();
 		int newMove = new Random().nextInt(i.getDirections().size() - 1);
+		System.out.println(i.getDirections().get(newMove));
 		return i.getDirections().get(newMove);
+
 	}
 
 	public int getX() {

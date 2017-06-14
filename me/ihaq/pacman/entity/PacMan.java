@@ -15,7 +15,6 @@ import me.ihaq.pacman.utils.Portal;
 public class PacMan {
 
 	private int x, y, height, width;
-	private boolean invinceble;
 	private Sprite pacman;
 	private FACING facing;
 	private CollisionRect pac;
@@ -66,6 +65,16 @@ public class PacMan {
 	}
 
 	private void checkForRotation() {
+
+		if (facing == FACING.UP && Gdx.input.isKeyJustPressed(Keys.DOWN)) {
+			rotate(Keys.DOWN);
+		} else if (facing == FACING.DOWN && Gdx.input.isKeyJustPressed(Keys.UP)) {
+			rotate(Keys.UP);
+		} else if (facing == FACING.RIGHT && Gdx.input.isKeyJustPressed(Keys.LEFT)) {
+			rotate(Keys.LEFT);
+		} else if (facing == FACING.LEFT && Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
+			rotate(Keys.RIGHT);
+		}
 		if (!intersectionCollide()) {
 			return;
 		}
@@ -112,11 +121,6 @@ public class PacMan {
 
 	private boolean collides(int x, int y) {
 		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
-		/*
-		 * shapeRenderer.begin(ShapeType.Filled);
-		 * shapeRenderer.setColor(Color.RED); shapeRenderer.rect(pac.x, pac.y,
-		 * pac.width, pac.height); shapeRenderer.end();
-		 */
 		for (CollisionRect r : Game.boxes) {
 			if (r.collidesWith(pac)) {
 				return true;
@@ -147,7 +151,7 @@ public class PacMan {
 		for (Tic r : Game.tic) {
 			if (r.isAlive()) {
 				if (r.getCollisionRect().collidesWith(this.pac)) {
-					Game.score++;
+					Game.score += 100;
 					r.setAlive(false);
 				}
 			}
@@ -176,14 +180,6 @@ public class PacMan {
 			}
 		}
 
-	}
-
-	public boolean isInvinceble() {
-		return this.invinceble;
-	}
-
-	public void setInvinceble(boolean invinceble) {
-		this.invinceble = invinceble;
 	}
 
 }
