@@ -22,26 +22,26 @@ import me.ihaq.pacman.utils.Portal;
 
 public class Game {
 
-	public static Texture background;
-	public static SpriteBatch batch;
-	public static PacMan pacMan;
-	public static boolean playing, eatMode;
-	public static ArrayList<CollisionRect> boxes;
-	public static ArrayList<Intersection> intersections;
-	public static ArrayList<Portal> portals;
-	public static ArrayList<Tic> tic;
-	public static ArrayList<PowerUp> powerUp;
-	public static ArrayList<Ghost> ghosts;
+	public PacMan pacMan;
+	public boolean playing, eatMode;
+	public ArrayList<CollisionRect> boxes;
+	public ArrayList<Intersection> intersections;
+	public ArrayList<Portal> portals;
+	public ArrayList<Tic> tic;
+	public ArrayList<PowerUp> powerUp;
+	public ArrayList<Ghost> ghosts;
+	public int score;
 
-	public static int score;
-	public static ShapeRenderer shapeRenderer;
-	public static BitmapFont font;
+	private ShapeRenderer shapeRenderer;
+	private Texture background;
+	private SpriteBatch batch;
+	private BitmapFont font;
 
 	public Game() {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont();
-		background = new Texture("game/bGround.jpg");
+		background = new Texture("game/bGround.png");
 		pacMan = new PacMan(new Texture("game/pacman.png"), 475, 158);
 		playing = false;
 		score = 0;
@@ -71,7 +71,11 @@ public class Game {
 	}
 
 	private void createEntities() {
-		ghosts.add(new Ghost(new Texture("game/ghostO.png"), 374, 308));
+
+		portals.add(new Portal(168, 381, 167, 382, 790));
+		portals.add(new Portal(823, 382, 824, 383, 198));
+
+		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 374, 308));
 
 		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 308, 105));
 
@@ -231,9 +235,6 @@ public class Game {
 	}
 
 	private void createBoundaries() {
-
-		portals.add(new Portal(192, 381, 193, 382, 753));
-		portals.add(new Portal(795, 382, 796, 383, 237));
 
 		intersections.add(new Intersection(183, 40, 184, 41, Arrays.asList(FACING.UP, FACING.RIGHT)));
 		intersections.add(new Intersection(458, 40, 459, 41, Arrays.asList(FACING.UP, FACING.RIGHT, FACING.LEFT)));

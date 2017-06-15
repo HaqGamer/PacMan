@@ -12,7 +12,7 @@ import me.ihaq.pacman.Main.STATE;
 import me.ihaq.pacman.utils.ImageButton;
 
 public class MainMenu {
-	
+
 	private SpriteBatch batch;
 	private Texture logo;
 	private Music music;
@@ -54,6 +54,10 @@ public class MainMenu {
 		}
 		batch.end();
 
+	}
+
+	public Music getMusic() {
+		return this.music;
 	}
 
 }

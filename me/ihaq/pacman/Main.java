@@ -10,10 +10,10 @@ import me.ihaq.pacman.menu.HowToPlayMenu;
 import me.ihaq.pacman.menu.MainMenu;
 
 public class Main extends ApplicationAdapter {
-	private MainMenu MAIN;
-	private HowToPlayMenu HOWTOPLAY;
-	private Game GAME;
-	private EndMenu END;
+	public static MainMenu MAIN;
+	public static HowToPlayMenu HOWTOPLAY;
+	public static Game GAME;
+	public static EndMenu END;
 	public static boolean clicked;
 	public static STATE state;
 

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import me.ihaq.pacman.menu.Game;
+import me.ihaq.pacman.Main;
 import me.ihaq.pacman.menu.Game.FACING;
 import me.ihaq.pacman.utils.CollisionRect;
 import me.ihaq.pacman.utils.Intersection;
@@ -15,13 +15,14 @@ import me.ihaq.pacman.utils.Portal;
 public class Ghost {
 
 	private int x, initialX, initialY, y, height, width, vx, vy;
-	private Sprite ghost;
+	private Sprite ghost, eatGhost;
 	private FACING facing;
 	private boolean alive, eatable;
 	private CollisionRect rect;
 
 	public Ghost(Texture t, int x, int y) {
 		this.ghost = new Sprite(t);
+		this.eatGhost = new Sprite(new Texture("game/ghostEAT.png"));
 		this.x = x;
 		this.y = y;
 		this.initialX = x;
@@ -39,12 +40,17 @@ public class Ghost {
 			this.x = initialX;
 			this.y = initialY;
 		}
+		if (!eatable) {
+			this.ghost.setPosition(this.x, this.y);
+			this.ghost.draw(batch);
+		} else {
+			this.eatGhost.setPosition(this.x, this.y);
+			this.eatGhost.draw(batch);
+		}
 
-		this.ghost.setPosition(this.x, this.y);
-		this.ghost.draw(batch);
 		this.rect = new CollisionRect(this.x, this.y, this.x + this.width, this.y + this.height);
 
-		if (!Game.playing) {
+		if (!Main.GAME.playing) {
 			return;
 		}
 
@@ -93,7 +99,7 @@ public class Ghost {
 	}
 
 	private void checkForPortals() {
-		for (Portal r : Game.portals) {
+		for (Portal r : Main.GAME.portals) {
 			if (r.getCollisionRect().collidesWith(this.rect)) {
 				this.x = r.getTargetX();
 			}
@@ -102,7 +108,7 @@ public class Ghost {
 
 	private boolean collides(int x, int y) {
 		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
-		for (CollisionRect r : Game.boxes) {
+		for (CollisionRect r : Main.GAME.boxes) {
 			if (r.collidesWith(pac)) {
 				return true;
 			}
@@ -111,7 +117,7 @@ public class Ghost {
 	}
 
 	private boolean intersectionCollide() {
-		for (Intersection r : Game.intersections) {
+		for (Intersection r : Main.GAME.intersections) {
 			if (r.getCollisionRect().collidesWith(this.rect)) {
 				return true;
 			}
@@ -120,7 +126,7 @@ public class Ghost {
 	}
 
 	private Intersection getCollidingIntersection() {
-		for (Intersection r : Game.intersections) {
+		for (Intersection r : Main.GAME.intersections) {
 			if (r.getCollisionRect().collidesWith(this.rect)) {
 				return r;
 			}

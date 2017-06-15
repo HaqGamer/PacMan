@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import me.ihaq.pacman.Main;
 import me.ihaq.pacman.Main.STATE;
-import me.ihaq.pacman.menu.Game;
 import me.ihaq.pacman.menu.Game.FACING;
 import me.ihaq.pacman.utils.CollisionRect;
 import me.ihaq.pacman.utils.Intersection;
@@ -20,7 +19,7 @@ public class PacMan {
 	private Sprite pacman;
 	private FACING facing;
 	private CollisionRect pac;
-	private boolean alive;
+	private boolean alive, eatMode;
 
 	public PacMan(Texture t, int x, int y) {
 		this.pacman = new Sprite(t);
@@ -44,8 +43,8 @@ public class PacMan {
 
 		if (Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.RIGHT)
 				|| Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.DOWN)
-				|| Game.playing == true) {
-			Game.playing = true;
+				|| Main.GAME.playing == true) {
+			Main.GAME.playing = true;
 
 			checkForPortals();
 			checkForRotation();
@@ -64,7 +63,7 @@ public class PacMan {
 	}
 
 	private void checkForPortals() {
-		for (Portal r : Game.portals) {
+		for (Portal r : Main.GAME.portals) {
 			if (r.getCollisionRect().collidesWith(this.pac)) {
 				this.x = r.getTargetX();
 			}
@@ -128,7 +127,7 @@ public class PacMan {
 
 	private boolean collides(int x, int y) {
 		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
-		for (CollisionRect r : Game.boxes) {
+		for (CollisionRect r : Main.GAME.boxes) {
 			if (r.collidesWith(pac)) {
 				return true;
 			}
@@ -137,7 +136,7 @@ public class PacMan {
 	}
 
 	private boolean intersectionCollide() {
-		for (Intersection r : Game.intersections) {
+		for (Intersection r : Main.GAME.intersections) {
 			if (r.getCollisionRect().collidesWith(this.pac)) {
 				return true;
 			}
@@ -146,7 +145,7 @@ public class PacMan {
 	}
 
 	private Intersection getCollidingIntersection() {
-		for (Intersection r : Game.intersections) {
+		for (Intersection r : Main.GAME.intersections) {
 			if (r.getCollisionRect().collidesWith(this.pac)) {
 				return r;
 			}
@@ -155,10 +154,10 @@ public class PacMan {
 	}
 
 	private void ticCollide() {
-		for (Tic r : Game.tic) {
+		for (Tic r : Main.GAME.tic) {
 			if (r.isAlive()) {
 				if (r.getCollisionRect().collidesWith(this.pac)) {
-					Game.score += 100;
+					Main.GAME.score += 100;
 					r.setAlive(false);
 				}
 			}
@@ -167,10 +166,36 @@ public class PacMan {
 	}
 
 	private void cherryCollide() {
-		for (PowerUp r : Game.powerUp) {
+		for (PowerUp r : Main.GAME.powerUp) {
 			if (r.isAlive()) {
 				if (r.getCollisionRect().collidesWith(this.pac)) {
 					r.setAlive(false);
+					this.eatMode = true;
+					for (Ghost g : Main.GAME.ghosts) {
+						g.setEatable(true);
+					}
+
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							boolean goochie = false;
+							while (true) {
+								if (goochie) {
+									eatMode = false;
+									for (Ghost g : Main.GAME.ghosts) {
+										g.setEatable(false);
+									}
+								}
+								goochie = true;
+								try {
+									Thread.sleep(5000); // how many seconds
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+					}).start();
+
 				}
 			}
 		}
@@ -178,12 +203,12 @@ public class PacMan {
 	}
 
 	private void ghostCollide() {
-		for (Ghost g : Game.ghosts) {
+		for (Ghost g : Main.GAME.ghosts) {
 			if (g.isAlive()) {
 				if (g.getCollisionRect().collidesWith(this.pac)) {
 					if (g.isEatable()) {
 						g.setAlive(false);
-					} else if (!g.isEatable()) {
+					} else if (!g.isEatable() && this.eatMode) {
 						g.setEatable(true);
 					} else {
 						this.alive = false;
