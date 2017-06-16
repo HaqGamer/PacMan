@@ -188,7 +188,7 @@ public class PacMan {
 								}
 								goochie = true;
 								try {
-									Thread.sleep(5000); // how many seconds
+									Thread.sleep(10000); // how many seconds
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}

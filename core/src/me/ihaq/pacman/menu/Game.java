@@ -61,13 +61,14 @@ public class Game {
 		batch.begin();
 		batch.draw(background, 0, 0);
 		pacMan.render(batch);
-		renderEntitis(batch);
+		renderEntitis(batch);	
 		font.getData().setScale(2F);
 		font.draw(batch, "" + score, 22, 595);
 		int mouseX = Gdx.input.getX();
 		int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-		System.out.println(mouseX + " , " + mouseY);
+		//System.out.println(mouseX + " , " + mouseY);
 		batch.end();
+		renderBoundaries();
 	}
 
 	private void createEntities() {
@@ -75,6 +76,8 @@ public class Game {
 		portals.add(new Portal(168, 381, 167, 382, 790));
 		portals.add(new Portal(823, 382, 824, 383, 198));
 
+		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 374, 308));
+		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 374, 308));
 		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 374, 308));
 
 		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 308, 105));
@@ -254,7 +257,7 @@ public class Game {
 
 		intersections.add(new Intersection(186, 177, 187, 178, Arrays.asList(FACING.UP, FACING.RIGHT)));
 		intersections.add(new Intersection(230, 177, 231, 178, Arrays.asList(FACING.LEFT, FACING.DOWN)));
-		intersections.add(new Intersection(304, 177, 305, 178, Arrays.asList(FACING.UP, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(310, 177, 311, 178, Arrays.asList(FACING.UP, FACING.DOWN, FACING.RIGHT)));
 		intersections.add(new Intersection(382, 177, 383, 178, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.RIGHT)));
 		intersections.add(new Intersection(457, 177, 458, 178, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));
 		intersections.add(new Intersection(535, 177, 536, 178, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));

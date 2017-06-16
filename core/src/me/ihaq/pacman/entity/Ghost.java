@@ -17,8 +17,9 @@ public class Ghost {
 	private int x, initialX, initialY, y, height, width, vx, vy;
 	private Sprite ghost, eatGhost;
 	private FACING facing;
-	private boolean alive, eatable;
+	private boolean alive, eatable, collide;
 	private CollisionRect rect;
+	private Intersection i;
 
 	public Ghost(Texture t, int x, int y) {
 		this.ghost = new Sprite(t);
@@ -92,10 +93,15 @@ public class Ghost {
 	}
 
 	private void checkForCollisions() {
-		this.facing = intersectionCollide() ? newDirection() : this.facing;
-		this.facing = intersectionCollide() ? newDirection() : this.facing;
-		this.facing = intersectionCollide() ? newDirection() : this.facing;
-		this.facing = intersectionCollide() ? newDirection() : this.facing;
+		this.facing = intersectionCollide() ? newIntersectionDirection() : this.facing;
+		this.facing = intersectionCollide() ? newIntersectionDirection() : this.facing;
+		this.facing = intersectionCollide() ? newIntersectionDirection() : this.facing;
+		this.facing = intersectionCollide() ? newIntersectionDirection() : this.facing;
+
+		this.facing = this.facing == FACING.UP && collides(this.x, this.y + 2) ? newDirection() : this.facing;
+		this.facing = this.facing == FACING.DOWN && collides(this.x, this.y - 2) ? newDirection() : this.facing;
+		this.facing = this.facing == FACING.RIGHT && collides(this.x + 2, this.y) ? newDirection() : this.facing;
+		this.facing = this.facing == FACING.LEFT && collides(this.x - 2, this.y) ? newDirection() : this.facing;
 	}
 
 	private void checkForPortals() {
@@ -134,11 +140,47 @@ public class Ghost {
 		return null;
 	}
 
-	private FACING newDirection() {
+	private FACING newIntersectionDirection() {
 		Intersection i = getCollidingIntersection();
-		int newMove = new Random().nextInt(i.getDirections().size() - 1);
+		if (i == this.i || collide) {
+			return this.facing;
+		}
+		int newMove = new Random().nextInt(i.getDirections().size());
 		System.out.println(i.getDirections().get(newMove));
+		System.out.println(i.getDirections());
+		this.i = i;
+		this.collide = true;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				boolean goochie = false;
+				while (true) {
+					if (goochie) {
+						collide = false;
+					}
+					goochie = true;
+					try {
+						Thread.sleep(4000); // how many seconds
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
 		return i.getDirections().get(newMove);
+	}
+
+	private FACING newDirection() {
+		int newMove = new Random().nextInt(4);
+		if (newMove == 0) { // UP
+			return FACING.UP;
+		} else if (newMove == 1) { // DOWN
+			return FACING.DOWN;
+		} else if (newMove == 2) { // RIGHT
+			return FACING.RIGHT;
+		} else { // LEFT
+			return FACING.LEFT;
+		}
 	}
 
 	public int getX() {
