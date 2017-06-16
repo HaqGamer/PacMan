@@ -13,10 +13,18 @@ public class HowToPlayMenu {
 
 	private SpriteBatch batch;
 
+	/*
+	 * Constructor for the HowToPlayMenu class. 
+	 * This is pretty much the same thing as the create() method in the Main.java class.
+	 */
 	public HowToPlayMenu() {
 		batch = new SpriteBatch();
 	}
 
+	/*
+	 * Renders everything for the menu.
+	 * If you press ENTER it continues to the game.
+	 */
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

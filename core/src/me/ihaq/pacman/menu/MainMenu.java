@@ -18,6 +18,10 @@ public class MainMenu {
 	private Music music;
 	private ImageButton play, playHovered, quit, quitHovered;
 
+	/*
+	 * Constructor for the MainMenu class. 
+	 * This is pretty much the same thing as the create() method in the Main.java class.
+	 */
 	public MainMenu() {
 		batch = new SpriteBatch();
 		logo = new Texture("mainmenu/logo.png");
@@ -28,6 +32,9 @@ public class MainMenu {
 		quitHovered = new ImageButton(new Texture("mainmenu/buttons/quitHOVERED.png"), 335, 200, 270, 105);
 	}
 
+	/*
+	 * Renders everything for the mainmenu
+	 */
 	public void render() {
 		music.play();
 		music.setLooping(true);
@@ -56,6 +63,9 @@ public class MainMenu {
 
 	}
 
+	/*
+	 * Returns the music for the class.
+	 */
 	public Music getMusic() {
 		return this.music;
 	}

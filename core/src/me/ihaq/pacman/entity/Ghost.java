@@ -21,6 +21,9 @@ public class Ghost {
 	private CollisionRect rect;
 	private Intersection i;
 
+	/*
+	 * Constructor for the Ghost class
+	 */
 	public Ghost(Texture t, int x, int y) {
 		this.ghost = new Sprite(t);
 		this.eatGhost = new Sprite(new Texture("game/ghostEAT.png"));
@@ -35,6 +38,9 @@ public class Ghost {
 		this.rect = new CollisionRect(x, y, x + this.width, y + this.height);
 	}
 
+	/*
+	 * Renders all the ghosts Checks for all the collisions
+	 */
 	public void render(SpriteBatch batch) {
 		if (!alive) {
 			alive = true;
@@ -58,7 +64,6 @@ public class Ghost {
 		if (this.facing == FACING.UP && !collides(this.x, this.y + 2)) {
 			this.vx = 0;
 			this.vy = 2;
-
 			this.x += this.vx;
 			this.y += this.vy;
 		}
@@ -66,7 +71,6 @@ public class Ghost {
 		else if (this.facing == FACING.DOWN && !collides(this.x, this.y - 2)) {
 			this.vx = 0;
 			this.vy = -2;
-
 			this.x += this.vx;
 			this.y += this.vy;
 		}
@@ -74,7 +78,6 @@ public class Ghost {
 		else if (this.facing == FACING.RIGHT && !collides(this.x + 2, this.y)) {
 			this.vx = 2;
 			this.vy = 0;
-
 			this.x += this.vx;
 			this.y += this.vy;
 		}
@@ -82,7 +85,6 @@ public class Ghost {
 		else if (this.facing == FACING.LEFT && !collides(this.x - 2, this.y)) {
 			this.vx = -2;
 			this.vy = 0;
-
 			this.x += this.vx;
 			this.y += this.vy;
 		}
@@ -92,6 +94,10 @@ public class Ghost {
 
 	}
 
+	/*
+	 * Checks if the ghost collides with an intersection or a boundry. If it
+	 * collides it gets a new direction
+	 */
 	private void checkForCollisions() {
 		this.facing = intersectionCollide() ? newIntersectionDirection() : this.facing;
 		this.facing = intersectionCollide() ? newIntersectionDirection() : this.facing;
@@ -104,6 +110,9 @@ public class Ghost {
 		this.facing = this.facing == FACING.LEFT && collides(this.x - 2, this.y) ? newDirection() : this.facing;
 	}
 
+	/*
+	 * Checks if the ghost collides with an portal if it does it teleports it.
+	 */
 	private void checkForPortals() {
 		for (Portal r : Main.GAME.portals) {
 			if (r.getCollisionRect().collidesWith(this.rect)) {
@@ -112,6 +121,10 @@ public class Ghost {
 		}
 	}
 
+	/*
+	 * Takes in and x and y and makes a collisionrect out of it. And if that
+	 * collisionrect collides with onne it returns true.
+	 */
 	private boolean collides(int x, int y) {
 		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
 		for (CollisionRect r : Main.GAME.boxes) {
@@ -122,6 +135,9 @@ public class Ghost {
 		return false;
 	}
 
+	/*
+	 * Returns true if the ghost collides with an intersection else false
+	 */
 	private boolean intersectionCollide() {
 		for (Intersection r : Main.GAME.intersections) {
 			if (r.getCollisionRect().collidesWith(this.rect)) {
@@ -131,6 +147,9 @@ public class Ghost {
 		return false;
 	}
 
+	/*
+	 * Returns the intersection the ghost is currently colliding with
+	 */
 	private Intersection getCollidingIntersection() {
 		for (Intersection r : Main.GAME.intersections) {
 			if (r.getCollisionRect().collidesWith(this.rect)) {
@@ -140,8 +159,14 @@ public class Ghost {
 		return null;
 	}
 
+	/*
+	 * Gets a new direction for the ghost if it collides at an intersection
+	 */
 	private FACING newIntersectionDirection() {
 		Intersection i = getCollidingIntersection();
+		/*
+		 * Only allows the ghost to collide with a intersection once
+		 */
 		if (i == this.i || collide) {
 			return this.facing;
 		}
@@ -150,6 +175,10 @@ public class Ghost {
 		System.out.println(i.getDirections());
 		this.i = i;
 		this.collide = true;
+
+		/*
+		 * Allows the ghost to collide with a intersection once every 4 seconds
+		 */
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -170,6 +199,9 @@ public class Ghost {
 		return i.getDirections().get(newMove);
 	}
 
+	/*
+	 * Gets a new direction for the ghost if the ghost collides with a boundrie
+	 */
 	private FACING newDirection() {
 		int newMove = new Random().nextInt(4);
 		if (newMove == 0) { // UP
@@ -183,38 +215,65 @@ public class Ghost {
 		}
 	}
 
+	/*
+	 * Returns the x value of the ghost
+	 */
 	public int getX() {
 		return this.x;
 	}
 
+	/*
+	 * Returns the x value of the ghost
+	 */
 	public int getY() {
 		return this.y;
 	}
 
+	/*
+	 * Returns the height of the ghost
+	 */
 	public int getHeight() {
 		return this.height;
 	}
 
+	/*
+	 * Returns the width of the ghost
+	 */
 	public int getWidth() {
 		return this.width;
 	}
 
+	/*
+	 * returns the CollisionRect for the ghost
+	 */
 	public CollisionRect getCollisionRect() {
 		return this.rect;
 	}
 
+	/*
+	 * Sets the alive status of the ghost
+	 */
 	public void setAlive(boolean b) {
 		this.alive = b;
 	}
 
+	/*
+	 * Returns true of the ghost is alive else false
+	 */
 	public boolean isAlive() {
 		return this.alive;
 	}
 
+	/*
+	 * Sets the etable status of the ghost
+	 */
 	public void setEatable(boolean b) {
 		this.eatable = b;
 	}
 
+	/*
+	 * Returns true of eatable else false
+	 */
 	public boolean isEatable() {
 		return this.eatable;
 	}

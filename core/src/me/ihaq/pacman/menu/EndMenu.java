@@ -17,12 +17,22 @@ public class EndMenu {
 	private BitmapFont font;
 	private GlyphLayout glyphLayout;
 
+	
+	/*
+	 * Constructor for the EndMenu class. 
+	 * This is pretty much the same thing as the create() method in the Main.java class.
+	 */
 	public EndMenu() {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		glyphLayout = new GlyphLayout();
 	}
 
+	/*
+	 * Renders everything for the EndMenu Class.
+	 * If the user presses ENTER it returns to main menu.
+	 * If the user presses R it restarts the game.
+	 */
 	public void render() {
 		Main.MAIN.getMusic().stop();
 		Gdx.gl.glClearColor(0, 0, 0, 1);

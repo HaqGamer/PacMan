@@ -24,19 +24,23 @@ public class Game {
 
 	public PacMan pacMan;
 	public boolean playing, eatMode;
-	public ArrayList<CollisionRect> boxes;
-	public ArrayList<Intersection> intersections;
-	public ArrayList<Portal> portals;
-	public ArrayList<Tic> tic;
-	public ArrayList<PowerUp> powerUp;
-	public ArrayList<Ghost> ghosts;
-	public int score;
+	public ArrayList<CollisionRect> boxes; // holds all the boundries
+	public ArrayList<Intersection> intersections; // holds all he intersections
+	public ArrayList<Portal> portals; // holds all the portals
+	public ArrayList<Tic> tic; // holds all the tics
+	public ArrayList<PowerUp> powerUp; // holds all the powerups
+	public ArrayList<Ghost> ghosts; // holds all the ghosts
+	public int score; // holds the score
 
 	private ShapeRenderer shapeRenderer;
 	private Texture background;
 	private SpriteBatch batch;
 	private BitmapFont font;
 
+	
+	/*
+	 * Constructor for the Game class
+	 */
 	public Game() {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
@@ -55,6 +59,9 @@ public class Game {
 		createBoundaries();
 	}
 
+	/*
+	 * Renders everything for the game
+	 */
 	public void render() {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -71,6 +78,13 @@ public class Game {
 		renderBoundaries();
 	}
 
+	
+	/*
+	 * Creates the protals for the map
+	 * Creates the ghosts for the game
+	 * Creates all the powerups for the map
+	 * Creates all the tics for the map
+	 */
 	private void createEntities() {
 
 		portals.add(new Portal(168, 381, 167, 382, 790));
@@ -225,6 +239,11 @@ public class Game {
 		tic.add(new Tic(new Texture("game/tic.png"), 188, 45));
 	}
 
+	/*
+	 * Renders all the powerups
+	 * Renders all the tics
+	 * Renders all the ghosts
+	 */
 	private void renderEntitis(SpriteBatch batch) {
 		for (PowerUp p : powerUp) {
 			p.render(batch);
@@ -236,7 +255,11 @@ public class Game {
 			g.render(batch);
 		}
 	}
-
+	
+	/*
+	 * Creates all the intersections for the map
+	 * Creates all the boundries for the map
+	 */
 	private void createBoundaries() {
 
 		intersections.add(new Intersection(183, 40, 184, 41, Arrays.asList(FACING.UP, FACING.RIGHT)));
@@ -374,7 +397,10 @@ public class Game {
 		}
 		shapeRenderer.end();
 	}
-
+	
+	/*
+	 * All the possible direction for the pacman to face.
+	 */
 	public enum FACING {
 		UP, DOWN, RIGHT, LEFT
 	}

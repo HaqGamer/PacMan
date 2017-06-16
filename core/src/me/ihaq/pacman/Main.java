@@ -10,6 +10,7 @@ import me.ihaq.pacman.menu.HowToPlayMenu;
 import me.ihaq.pacman.menu.MainMenu;
 
 public class Main extends ApplicationAdapter {
+	
 	public static MainMenu MAIN;
 	public static HowToPlayMenu HOWTOPLAY;
 	public static Game GAME;
@@ -17,10 +18,17 @@ public class Main extends ApplicationAdapter {
 	public static boolean clicked;
 	public static STATE state;
 
+	/*
+	 * All the possible states(menus) for the game
+	 */
 	public enum STATE {
 		MAIN, GAME, HOWTOPLAY, END
 	}
 
+	/*
+	 * Called when the game first loads
+	 * Creates all the menus for the game
+	 */
 	@Override
 	public void create() {
 		MAIN = new MainMenu();
@@ -29,6 +37,10 @@ public class Main extends ApplicationAdapter {
 		state = STATE.MAIN;
 	}
 
+	/*
+	 * Renders a menu depending on the state of the game
+	 * And if you press escape it returns you back to the main menu
+	 */
 	@Override
 	public void render() {
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
