@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 import me.ihaq.pacman.entity.Ghost;
 import me.ihaq.pacman.entity.PacMan;
@@ -32,18 +29,15 @@ public class Game {
 	public ArrayList<Ghost> ghosts; // holds all the ghosts
 	public int score; // holds the score
 
-	private ShapeRenderer shapeRenderer;
 	private Texture background;
 	private SpriteBatch batch;
 	private BitmapFont font;
 
-	
 	/*
 	 * Constructor for the Game class
 	 */
 	public Game() {
 		batch = new SpriteBatch();
-		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont();
 		background = new Texture("game/bGround.png");
 		pacMan = new PacMan(new Texture("game/pacman.png"), 475, 158);
@@ -68,22 +62,15 @@ public class Game {
 		batch.begin();
 		batch.draw(background, 0, 0);
 		pacMan.render(batch);
-		renderEntitis(batch);	
+		renderEntitis(batch);
 		font.getData().setScale(2F);
 		font.draw(batch, "" + score, 22, 595);
-		int mouseX = Gdx.input.getX();
-		int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-		//System.out.println(mouseX + " , " + mouseY);
 		batch.end();
-		renderBoundaries();
 	}
 
-	
 	/*
-	 * Creates the protals for the map
-	 * Creates the ghosts for the game
-	 * Creates all the powerups for the map
-	 * Creates all the tics for the map
+	 * Creates the protals for the map Creates the ghosts for the game Creates
+	 * all the powerups for the map Creates all the tics for the map
 	 */
 	private void createEntities() {
 
@@ -240,9 +227,7 @@ public class Game {
 	}
 
 	/*
-	 * Renders all the powerups
-	 * Renders all the tics
-	 * Renders all the ghosts
+	 * Renders all the powerups Renders all the tics Renders all the ghosts
 	 */
 	private void renderEntitis(SpriteBatch batch) {
 		for (PowerUp p : powerUp) {
@@ -255,10 +240,10 @@ public class Game {
 			g.render(batch);
 		}
 	}
-	
+
 	/*
-	 * Creates all the intersections for the map
-	 * Creates all the boundries for the map
+	 * Creates all the intersections for the map Creates all the boundries for
+	 * the map
 	 */
 	private void createBoundaries() {
 
@@ -384,20 +369,6 @@ public class Game {
 		boxes.add(new CollisionRect(154, 702, 843, 713));
 	}
 
-	private void renderBoundaries() {
-		shapeRenderer.begin(ShapeType.Filled);
-		for (CollisionRect r : boxes) {
-			shapeRenderer.setColor(Color.RED);
-			shapeRenderer.rect(r.x, r.y, r.width, r.height);
-		}
-		for (Intersection r : intersections) {
-			shapeRenderer.setColor(Color.GREEN);
-			shapeRenderer.rect(r.getCollisionRect().x, r.getCollisionRect().y, r.getCollisionRect().width,
-					r.getCollisionRect().height);
-		}
-		shapeRenderer.end();
-	}
-	
 	/*
 	 * All the possible direction for the pacman to face.
 	 */
