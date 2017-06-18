@@ -37,8 +37,7 @@ public class PacMan {
 	}
 
 	/*
-	 * Renders the pacman.
-	 * Checks if collides or not.
+	 * Renders the pacman. Checks if collides or not.
 	 */
 	public void render(SpriteBatch batch) {
 		if (!this.alive) {
@@ -149,7 +148,7 @@ public class PacMan {
 	 */
 	private boolean collides(int x, int y) {
 		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
-		for (CollisionRect r : Main.GAME.boxes) {
+		for (CollisionRect r : Main.GAME.pacmanBoundries) {
 			if (r.collidesWith(pac)) {
 				return true;
 			}
@@ -252,6 +251,8 @@ public class PacMan {
 				if (g.getCollisionRect().collidesWith(this.pac)) {
 					if (g.isEatable()) {
 						g.setAlive(false);
+						Main.GAME.score += 500;
+						g.setFacing(FACING.UP);
 					} else if (!g.isEatable() && this.eatMode) {
 						g.setEatable(true);
 					} else {

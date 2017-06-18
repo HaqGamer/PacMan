@@ -21,7 +21,8 @@ public class Game {
 
 	public PacMan pacMan;
 	public boolean playing, eatMode;
-	public ArrayList<CollisionRect> boxes; // holds all the boundries
+	public ArrayList<CollisionRect> pacmanBoundries; // holds all the boundries
+	public ArrayList<CollisionRect> ghostBoundries; // holds all the boundries
 	public ArrayList<Intersection> intersections; // holds all he intersections
 	public ArrayList<Portal> portals; // holds all the portals
 	public ArrayList<Tic> tic; // holds all the tics
@@ -43,7 +44,8 @@ public class Game {
 		pacMan = new PacMan(new Texture("game/pacman.png"), 475, 158);
 		playing = false;
 		score = 0;
-		boxes = new ArrayList<CollisionRect>();
+		pacmanBoundries = new ArrayList<CollisionRect>();
+		ghostBoundries = new ArrayList<CollisionRect>();
 		intersections = new ArrayList<Intersection>();
 		portals = new ArrayList<Portal>();
 		tic = new ArrayList<Tic>();
@@ -74,14 +76,15 @@ public class Game {
 	 */
 	private void createEntities() {
 
+		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 485, 380));
+		ghosts.add(new Ghost(new Texture("game/ghostO.png"), 485, 380));
+		ghosts.add(new Ghost(new Texture("game/ghostP.png"), 485, 380));
+		ghosts.add(new Ghost(new Texture("game/ghostC.png"), 485, 380));
+
 		portals.add(new Portal(168, 381, 167, 382, 790));
 		portals.add(new Portal(823, 382, 824, 383, 198));
 
-		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 374, 308));
-		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 374, 308));
-		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 374, 308));
-
-		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 308, 105));
+		// powerUp.add(new PowerUp(new Texture("game/cherry.png"), 308, 105));
 
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 105));
 		tic.add(new Tic(new Texture("game/tic.png"), 308, 125));
@@ -224,6 +227,279 @@ public class Game {
 		tic.add(new Tic(new Texture("game/tic.png"), 228, 45));
 		tic.add(new Tic(new Texture("game/tic.png"), 208, 45));
 		tic.add(new Tic(new Texture("game/tic.png"), 188, 45));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 228, 125));
+		tic.add(new Tic(new Texture("game/tic.png"), 228, 145));
+		tic.add(new Tic(new Texture("game/tic.png"), 228, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 208, 165));
+
+		// tic.add(new Tic(new Texture("game/cherry.png"), 178, 165));
+		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 178, 165));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 205));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 225));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 208, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 228, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 248, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 268, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 288, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 328, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 348, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 368, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 408, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 428, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 245));
+		// tic.add(new Tic(new Texture("game/tic.png"), 468, 245));
+		// tic.add(new Tic(new Texture("game/tic.png"), 488, 245));
+		// tic.add(new Tic(new Texture("game/tic.png"), 508, 245));
+		// tic.add(new Tic(new Texture("game/tic.png"), 528, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 568, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 588, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 628, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 648, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 668, 245));
+		// tic.add(new Tic(new Texture("game/tic.png"), 688, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 708, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 728, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 748, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 768, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 788, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 245));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 225));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 205));
+		// tic.add(new Tic(new Texture("game/tic.png"), 808, 185));
+
+		// tic.add(new Tic(new Texture("game/cherry.png"), 808, 165));
+		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 803, 165));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 788, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 768, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 748, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 748, 145));
+		tic.add(new Tic(new Texture("game/tic.png"), 748, 125));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 668, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 648, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 628, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 588, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 568, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 165));
+		// tic.add(new Tic(new Texture("game/tic.png"), 528, 165));
+		// tic.add(new Tic(new Texture("game/tic.png"), 508, 165));
+		// tic.add(new Tic(new Texture("game/tic.png"), 488, 165));
+		// tic.add(new Tic(new Texture("game/tic.png"), 468, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 428, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 408, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 368, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 348, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 328, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 308, 165));
+		// tic.add(new Tic(new Texture("game/tic.png"), 288, 165));
+		// tic.add(new Tic(new Texture("game/tic.png"), 268, 165));
+		// tic.add(new Tic(new Texture("game/tic.png"), 248, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 228, 165));
+		tic.add(new Tic(new Texture("game/tic.png"), 208, 165));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 128));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 148));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 128));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 225));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 205));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 185));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 225));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 205));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 185));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 265));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 285));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 325));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 345));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 365));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 385));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 405));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 425));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 445));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 265));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 285));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 325));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 345));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 365));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 385));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 405));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 425));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 445));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 545));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 565));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 585));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 545));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 565));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 585));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 588, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 568, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 528, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 508, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 488, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 468, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 428, 305));
+		tic.add(new Tic(new Texture("game/tic.png"), 408, 305));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 445));
+		tic.add(new Tic(new Texture("game/tic.png"), 588, 445));
+		tic.add(new Tic(new Texture("game/tic.png"), 568, 445));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 445));
+		tic.add(new Tic(new Texture("game/tic.png"), 528, 445));
+		tic.add(new Tic(new Texture("game/tic.png"), 508, 445));
+		tic.add(new Tic(new Texture("game/tic.png"), 488, 445));
+		tic.add(new Tic(new Texture("game/tic.png"), 468, 445));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 445));
+		tic.add(new Tic(new Texture("game/tic.png"), 428, 445));
+		tic.add(new Tic(new Texture("game/tic.png"), 408, 445));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 588, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 568, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 525));
+		// tic.add(new Tic(new Texture("game/tic.png"), 528, 525));
+		// tic.add(new Tic(new Texture("game/tic.png"), 508, 525));
+		// tic.add(new Tic(new Texture("game/tic.png"), 488, 525));
+		// tic.add(new Tic(new Texture("game/tic.png"), 468, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 428, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 408, 525));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 505));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 485));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 465));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 505));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 485));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 465));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 788, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 768, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 748, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 728, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 708, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 668, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 648, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 628, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 588, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 568, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 685));
+		// tic.add(new Tic(new Texture("game/tic.png"), 528, 685));
+		// tic.add(new Tic(new Texture("game/tic.png"), 508, 685));
+		// tic.add(new Tic(new Texture("game/tic.png"), 488, 685));
+		// tic.add(new Tic(new Texture("game/tic.png"), 468, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 428, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 408, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 368, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 348, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 328, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 308, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 288, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 268, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 248, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 228, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 208, 685));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 685));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 788, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 768, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 748, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 728, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 708, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 668, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 648, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 628, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 608, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 588, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 568, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 528, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 508, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 488, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 468, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 428, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 408, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 388, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 368, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 348, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 328, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 308, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 288, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 268, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 248, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 228, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 208, 585));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 585));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 605));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 625));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 645));
+		tic.add(new Tic(new Texture("game/tic.png"), 448, 665));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 605));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 625));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 645));
+		tic.add(new Tic(new Texture("game/tic.png"), 548, 665));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 288, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 268, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 248, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 228, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 208, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 788, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 768, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 748, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 728, 525));
+		tic.add(new Tic(new Texture("game/tic.png"), 708, 525));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 328, 385));
+		tic.add(new Tic(new Texture("game/tic.png"), 348, 385));
+		tic.add(new Tic(new Texture("game/tic.png"), 368, 385));
+		tic.add(new Tic(new Texture("game/tic.png"), 628, 385));
+		tic.add(new Tic(new Texture("game/tic.png"), 648, 385));
+		tic.add(new Tic(new Texture("game/tic.png"), 668, 385));
+
+		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 178, 630));
+
+		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 803, 630));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 665));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 605));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 665));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 605));
+
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 568));
+		tic.add(new Tic(new Texture("game/tic.png"), 808, 548));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 568));
+		tic.add(new Tic(new Texture("game/tic.png"), 188, 548));
 	}
 
 	/*
@@ -297,6 +573,7 @@ public class Game {
 
 		intersections.add(new Intersection(388, 448, 389, 449, Arrays.asList(FACING.DOWN, FACING.RIGHT)));
 		intersections.add(new Intersection(458, 448, 459, 449, Arrays.asList(FACING.UP, FACING.RIGHT, FACING.LEFT)));
+		intersections.add(new Intersection(497, 459, 498, 460, Arrays.asList(FACING.RIGHT, FACING.LEFT)));
 		intersections.add(new Intersection(537, 448, 538, 449, Arrays.asList(FACING.UP, FACING.RIGHT, FACING.LEFT)));
 		intersections.add(new Intersection(607, 448, 608, 449, Arrays.asList(FACING.DOWN, FACING.LEFT)));
 
@@ -327,46 +604,94 @@ public class Game {
 		intersections.add(new Intersection(682, 682, 683, 683, Arrays.asList(FACING.DOWN, FACING.RIGHT, FACING.LEFT)));
 		intersections.add(new Intersection(807, 682, 808, 683, Arrays.asList(FACING.DOWN, FACING.LEFT)));
 
-		boxes.add(new CollisionRect(409, 130, 589, 151));
-		boxes.add(new CollisionRect(482, 62, 515, 130));
-		boxes.add(new CollisionRect(210, 62, 438, 82));
-		boxes.add(new CollisionRect(334, 80, 364, 151));
-		boxes.add(new CollisionRect(157, 128, 215, 152));
-		boxes.add(new CollisionRect(260, 128, 288, 220));
-		boxes.add(new CollisionRect(214, 198, 288, 220));
-		boxes.add(new CollisionRect(560, 62, 788, 82));
-		boxes.add(new CollisionRect(634, 80, 664, 151));
-		boxes.add(new CollisionRect(560, 198, 664, 220));
-		boxes.add(new CollisionRect(710, 128, 738, 220));
-		boxes.add(new CollisionRect(738, 198, 788, 220));
-		boxes.add(new CollisionRect(336, 198, 439, 220));
-		boxes.add(new CollisionRect(783, 128, 839, 152));
-		boxes.add(new CollisionRect(482, 199, 516, 288));
-		boxes.add(new CollisionRect(408, 266, 590, 290));
-		boxes.add(new CollisionRect(156, 268, 288, 358));
-		boxes.add(new CollisionRect(710, 268, 844, 358));
-		boxes.add(new CollisionRect(634, 268, 664, 358));
-		boxes.add(new CollisionRect(334, 268, 364, 358));
-		boxes.add(new CollisionRect(157, 405, 288, 494));
-		boxes.add(new CollisionRect(709, 405, 844, 496));
-		boxes.add(new CollisionRect(634, 405, 664, 564));
-		boxes.add(new CollisionRect(560, 472, 664, 498));
-		boxes.add(new CollisionRect(334, 405, 366, 564));
-		boxes.add(new CollisionRect(363, 472, 438, 498));
-		boxes.add(new CollisionRect(483, 472, 515, 550));
-		boxes.add(new CollisionRect(410, 542, 588, 564));
-		boxes.add(new CollisionRect(210, 542, 289, 564));
-		boxes.add(new CollisionRect(710, 542, 790, 564));
-		boxes.add(new CollisionRect(483, 612, 515, 709));
-		boxes.add(new CollisionRect(210, 612, 289, 656));
-		boxes.add(new CollisionRect(335, 612, 438, 656));
-		boxes.add(new CollisionRect(560, 612, 663, 656));
-		boxes.add(new CollisionRect(708, 612, 787, 656));
-		boxes.add(new CollisionRect(410, 336, 588, 426));
-		boxes.add(new CollisionRect(154, 3, 843, 15));
-		boxes.add(new CollisionRect(154, 3, 164, 713));
-		boxes.add(new CollisionRect(833, 3, 843, 713));
-		boxes.add(new CollisionRect(154, 702, 843, 713));
+		pacmanBoundries.add(new CollisionRect(409, 130, 589, 151));
+		pacmanBoundries.add(new CollisionRect(482, 62, 515, 130));
+		pacmanBoundries.add(new CollisionRect(210, 62, 438, 82));
+		pacmanBoundries.add(new CollisionRect(334, 80, 364, 151));
+		pacmanBoundries.add(new CollisionRect(157, 128, 215, 152));
+		pacmanBoundries.add(new CollisionRect(260, 128, 288, 220));
+		pacmanBoundries.add(new CollisionRect(214, 198, 288, 220));
+		pacmanBoundries.add(new CollisionRect(560, 62, 788, 82));
+		pacmanBoundries.add(new CollisionRect(634, 80, 664, 151));
+		pacmanBoundries.add(new CollisionRect(560, 198, 664, 220));
+		pacmanBoundries.add(new CollisionRect(710, 128, 738, 220));
+		pacmanBoundries.add(new CollisionRect(738, 198, 788, 220));
+		pacmanBoundries.add(new CollisionRect(336, 198, 439, 220));
+		pacmanBoundries.add(new CollisionRect(783, 128, 839, 152));
+		pacmanBoundries.add(new CollisionRect(482, 199, 516, 288));
+		pacmanBoundries.add(new CollisionRect(408, 266, 590, 290));
+		pacmanBoundries.add(new CollisionRect(156, 268, 288, 358));
+		pacmanBoundries.add(new CollisionRect(710, 268, 844, 358));
+		pacmanBoundries.add(new CollisionRect(634, 268, 664, 358));
+		pacmanBoundries.add(new CollisionRect(334, 268, 364, 358));
+		pacmanBoundries.add(new CollisionRect(157, 405, 288, 494));
+		pacmanBoundries.add(new CollisionRect(709, 405, 844, 496));
+		pacmanBoundries.add(new CollisionRect(634, 405, 664, 564));
+		pacmanBoundries.add(new CollisionRect(560, 472, 664, 498));
+		pacmanBoundries.add(new CollisionRect(334, 405, 366, 564));
+		pacmanBoundries.add(new CollisionRect(363, 472, 438, 498));
+		pacmanBoundries.add(new CollisionRect(483, 472, 515, 550));
+		pacmanBoundries.add(new CollisionRect(410, 542, 588, 564));
+		pacmanBoundries.add(new CollisionRect(210, 542, 289, 564));
+		pacmanBoundries.add(new CollisionRect(710, 542, 790, 564));
+		pacmanBoundries.add(new CollisionRect(483, 612, 515, 709));
+		pacmanBoundries.add(new CollisionRect(210, 612, 289, 656));
+		pacmanBoundries.add(new CollisionRect(335, 612, 438, 656));
+		pacmanBoundries.add(new CollisionRect(560, 612, 663, 656));
+		pacmanBoundries.add(new CollisionRect(708, 612, 787, 656));
+		pacmanBoundries.add(new CollisionRect(154, 3, 843, 15));
+		pacmanBoundries.add(new CollisionRect(154, 3, 164, 713));
+		pacmanBoundries.add(new CollisionRect(833, 3, 843, 713));
+		pacmanBoundries.add(new CollisionRect(154, 702, 843, 713));
+		pacmanBoundries.add(new CollisionRect(410, 336, 588, 426));
+
+		ghostBoundries.add(new CollisionRect(409, 130, 589, 151));
+		ghostBoundries.add(new CollisionRect(482, 62, 515, 130));
+		ghostBoundries.add(new CollisionRect(210, 62, 438, 82));
+		ghostBoundries.add(new CollisionRect(334, 80, 364, 151));
+		ghostBoundries.add(new CollisionRect(157, 128, 215, 152));
+		ghostBoundries.add(new CollisionRect(260, 128, 288, 220));
+		ghostBoundries.add(new CollisionRect(214, 198, 288, 220));
+		ghostBoundries.add(new CollisionRect(560, 62, 788, 82));
+		ghostBoundries.add(new CollisionRect(634, 80, 664, 151));
+		ghostBoundries.add(new CollisionRect(560, 198, 664, 220));
+		ghostBoundries.add(new CollisionRect(710, 128, 738, 220));
+		ghostBoundries.add(new CollisionRect(738, 198, 788, 220));
+		ghostBoundries.add(new CollisionRect(336, 198, 439, 220));
+		ghostBoundries.add(new CollisionRect(783, 128, 839, 152));
+		ghostBoundries.add(new CollisionRect(482, 199, 516, 288));
+		ghostBoundries.add(new CollisionRect(408, 266, 590, 290));
+		ghostBoundries.add(new CollisionRect(156, 268, 288, 358));
+		ghostBoundries.add(new CollisionRect(710, 268, 844, 358));
+		ghostBoundries.add(new CollisionRect(634, 268, 664, 358));
+		ghostBoundries.add(new CollisionRect(334, 268, 364, 358));
+		ghostBoundries.add(new CollisionRect(157, 405, 288, 494));
+		ghostBoundries.add(new CollisionRect(709, 405, 844, 496));
+		ghostBoundries.add(new CollisionRect(634, 405, 664, 564));
+		ghostBoundries.add(new CollisionRect(560, 472, 664, 498));
+		ghostBoundries.add(new CollisionRect(334, 405, 366, 564));
+		ghostBoundries.add(new CollisionRect(363, 472, 438, 498));
+		ghostBoundries.add(new CollisionRect(483, 472, 515, 550));
+		ghostBoundries.add(new CollisionRect(410, 542, 588, 564));
+		ghostBoundries.add(new CollisionRect(210, 542, 289, 564));
+		ghostBoundries.add(new CollisionRect(710, 542, 790, 564));
+		ghostBoundries.add(new CollisionRect(483, 612, 515, 709));
+		ghostBoundries.add(new CollisionRect(210, 612, 289, 656));
+		ghostBoundries.add(new CollisionRect(335, 612, 438, 656));
+		ghostBoundries.add(new CollisionRect(560, 612, 663, 656));
+		ghostBoundries.add(new CollisionRect(708, 612, 787, 656));
+		ghostBoundries.add(new CollisionRect(154, 3, 843, 15));
+		ghostBoundries.add(new CollisionRect(154, 3, 164, 713));
+		ghostBoundries.add(new CollisionRect(833, 3, 843, 713));
+		ghostBoundries.add(new CollisionRect(154, 702, 843, 713));
+
+		ghostBoundries.add(new CollisionRect(409, 336, 418, 427));
+		ghostBoundries.add(new CollisionRect(409, 336, 588, 346));
+		ghostBoundries.add(new CollisionRect(581, 336, 589, 427));
+		ghostBoundries.add(new CollisionRect(417, 417, 476, 427));
+		ghostBoundries.add(new CollisionRect(521, 417, 589, 427));
+
+		// pacmanBoundries.add(new CollisionRect(410, 336, 588, 426));
 	}
 
 	/*

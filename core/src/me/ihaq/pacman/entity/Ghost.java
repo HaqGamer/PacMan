@@ -127,7 +127,7 @@ public class Ghost {
 	 */
 	private boolean collides(int x, int y) {
 		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
-		for (CollisionRect r : Main.GAME.boxes) {
+		for (CollisionRect r : Main.GAME.ghostBoundries) {
 			if (r.collidesWith(pac)) {
 				return true;
 			}
@@ -171,8 +171,6 @@ public class Ghost {
 			return this.facing;
 		}
 		int newMove = new Random().nextInt(i.getDirections().size());
-		System.out.println(i.getDirections().get(newMove));
-		System.out.println(i.getDirections());
 		this.i = i;
 		this.collide = true;
 
@@ -276,5 +274,12 @@ public class Ghost {
 	 */
 	public boolean isEatable() {
 		return this.eatable;
+	}
+
+	/*
+	 * Sets the direction the ghost is facing
+	 */
+	public void setFacing(FACING f) {
+		this.facing = f;
 	}
 }

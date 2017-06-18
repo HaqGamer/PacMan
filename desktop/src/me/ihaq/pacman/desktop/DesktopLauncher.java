@@ -13,9 +13,9 @@ public class DesktopLauncher {
 		config.width = 1000;
 		config.height = 720;
 		config.resizable = false;
-		config.addIcon("logo-16.png", FileType.Internal);
-		config.addIcon("logo-32.png", FileType.Internal);
-		config.addIcon("logo-128.png", FileType.Internal);
+		config.addIcon("icons/logo-16.png", FileType.Internal);
+		config.addIcon("icons/logo-32.png", FileType.Internal);
+		config.addIcon("icons/logo-128.png", FileType.Internal);
 		new LwjglApplication(new Main(), config);
 	}
 }
