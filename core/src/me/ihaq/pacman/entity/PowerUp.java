@@ -13,6 +13,10 @@ public class PowerUp {
 	private CollisionRect rect;
 	private boolean alive;
 
+	
+	/*
+	 * Constructor for the PowerUP class
+	 */
 	public PowerUp(Texture t, int x, int y) {
 		this.power = new Sprite(t);
 		this.x = x;
@@ -23,6 +27,9 @@ public class PowerUp {
 		this.alive = true;
 	}
 
+	/*
+	 * Renders the powerup if it is alive	
+	 */
 	public void render(SpriteBatch batch) {
 		if (!alive) {
 			return;
@@ -31,30 +38,51 @@ public class PowerUp {
 
 	}
 
+	/*
+	 * Returns the x value of the powerup
+	 */
 	public int getX() {
 		return this.x;
 	}
 
+	/*
+	 * Returns the y value of the powerup
+	 */
 	public int getY() {
 		return this.y;
 	}
 
+	/*
+	 * Returns the height of the powerup
+	 */
 	public int getHeight() {
 		return this.height;
 	}
 
+	/*
+	 * Returns the width of the powerup
+	 */
 	public int getWidth() {
 		return this.width;
 	}
 
+	/*
+	 * Returns the CollisionRect for the powerup
+	 */
 	public CollisionRect getCollisionRect() {
 		return this.rect;
 	}
 
+	/*
+	 * Sets alive status for the powerup
+	 */
 	public void setAlive(boolean b) {
 		this.alive = b;
 	}
 
+	/*
+	 * Retunrs true if alive or false if not
+	 */
 	public boolean isAlive() {
 		return this.alive;
 	}

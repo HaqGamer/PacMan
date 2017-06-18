@@ -13,6 +13,9 @@ public class Tic {
 	private CollisionRect rect;
 	private boolean alive;
 
+	/*
+	 * Constructor for the Tic Class
+	 */
 	public Tic(Texture t, int x, int y) {
 		this.tic = new Sprite(t);
 		this.x = x;
@@ -23,36 +26,62 @@ public class Tic {
 		this.alive = true;
 	}
 
+	/*
+	 * Renders the tic if it is alive
+	 */
 	public void render(SpriteBatch batch) {
-		if(!alive){
+		if (!alive) {
 			return;
 		}
 		batch.draw(this.tic, this.x, this.y);
 	}
 
+	/*
+	 * Returns the x value of the tic
+	 */
 	public int getX() {
 		return this.x;
 	}
 
+	/*
+	 * Returns the y value of the tic
+	 */
 	public int getY() {
 		return this.y;
 	}
 
+	/*
+	 * Returns the height of the tic
+	 */
 	public int getHeight() {
 		return this.height;
 	}
 
+	/*
+	 * Returns the width of the tic
+	 */
 	public int getWidth() {
 		return this.width;
 	}
 
+	/*
+	 * Returns the CollisionRect for the tic
+	 */
 	public CollisionRect getCollisionRect() {
 		return this.rect;
 	}
-	public void setAlive(boolean b){
+
+	/*
+	 * Sets alive for the tic 
+	 */
+	public void setAlive(boolean b) {
 		this.alive = b;
 	}
-	public boolean isAlive(){
+
+	/*
+	 * Returns true if the tic is alive or false if not alive
+	 */
+	public boolean isAlive() {
 		return this.alive;
 	}
 

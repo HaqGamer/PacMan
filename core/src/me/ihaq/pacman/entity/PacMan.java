@@ -21,6 +21,9 @@ public class PacMan {
 	private CollisionRect pac;
 	private boolean alive, eatMode;
 
+	/*
+	 * Constructor for the PacMan class
+	 */
 	public PacMan(Texture t, int x, int y) {
 		this.pacman = new Sprite(t);
 		this.x = x;
@@ -33,6 +36,10 @@ public class PacMan {
 
 	}
 
+	/*
+	 * Renders the pacman.
+	 * Checks if collides or not.
+	 */
 	public void render(SpriteBatch batch) {
 		if (!this.alive) {
 			return;
@@ -52,6 +59,11 @@ public class PacMan {
 		}
 	}
 
+	/*
+	 * Checks for all the collisions Chceks if pacman collides with boundries
+	 * checks if pacman collides with powerups checks if pacman collides with
+	 * ghosts
+	 */
 	private void checkForCollisions() {
 		this.y = this.facing == FACING.UP && !collides(this.x, this.y + 2) ? this.y + 2 : this.y;
 		this.y = this.facing == FACING.DOWN && !collides(this.x, this.y - 2) ? this.y - 2 : this.y;
@@ -70,6 +82,9 @@ public class PacMan {
 		}
 	}
 
+	/*
+	 * Checks if pacman can rotate/change direction
+	 */
 	private void checkForRotation() {
 
 		if (facing == FACING.UP && Gdx.input.isKeyJustPressed(Keys.DOWN)) {
@@ -97,6 +112,9 @@ public class PacMan {
 		}
 	}
 
+	/*
+	 * Checks what key was pressed and rotates pacman accordingly
+	 */
 	private void rotate(int key) {
 		float rotation = pacman.getRotation();
 		boolean flipedY = pacman.isFlipY();
@@ -125,6 +143,10 @@ public class PacMan {
 		}
 	}
 
+	/*
+	 * Takes in and x and y and makes a collisionrect out of it. And if that
+	 * collisionrect collides with one it returns true.
+	 */
 	private boolean collides(int x, int y) {
 		CollisionRect pac = new CollisionRect(x, y, x + this.width, y + this.height);
 		for (CollisionRect r : Main.GAME.boxes) {
@@ -135,6 +157,9 @@ public class PacMan {
 		return false;
 	}
 
+	/*
+	 * Checks if pacman is colldiing with anything
+	 */
 	private boolean intersectionCollide() {
 		for (Intersection r : Main.GAME.intersections) {
 			if (r.getCollisionRect().collidesWith(this.pac)) {
@@ -144,6 +169,9 @@ public class PacMan {
 		return false;
 	}
 
+	/*
+	 * Returns the Intersectino that pacman is colliding with
+	 */
 	private Intersection getCollidingIntersection() {
 		for (Intersection r : Main.GAME.intersections) {
 			if (r.getCollisionRect().collidesWith(this.pac)) {
@@ -153,6 +181,10 @@ public class PacMan {
 		return null;
 	}
 
+	/*
+	 * Checks if pacman collides with a tic If it does it increases the score by
+	 * 100
+	 */
 	private void ticCollide() {
 		for (Tic r : Main.GAME.tic) {
 			if (r.isAlive()) {
@@ -165,6 +197,10 @@ public class PacMan {
 
 	}
 
+	/*
+	 * Checks if pacman collides with a powerup If it does it sets all the
+	 * ghosts to eatable mode
+	 */
 	private void cherryCollide() {
 		for (PowerUp r : Main.GAME.powerUp) {
 			if (r.isAlive()) {
@@ -175,6 +211,9 @@ public class PacMan {
 						g.setEatable(true);
 					}
 
+					/*
+					 * After 10 seconds it sets the ghosts to ont eatable
+					 */
 					new Thread(new Runnable() {
 						@Override
 						public void run() {
@@ -188,7 +227,7 @@ public class PacMan {
 								}
 								goochie = true;
 								try {
-									Thread.sleep(5000); // how many seconds
+									Thread.sleep(10000); // how many seconds
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}
@@ -202,6 +241,11 @@ public class PacMan {
 
 	}
 
+	/*
+	 * Checks if pacman collides with a ghost If it collides it checks if the
+	 * ghost is eatable or not If the ghost is eatble it resets the ghost if not
+	 * eatable it ends the game.
+	 */
 	private void ghostCollide() {
 		for (Ghost g : Main.GAME.ghosts) {
 			if (g.isAlive()) {

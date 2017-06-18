@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 import me.ihaq.pacman.entity.Ghost;
 import me.ihaq.pacman.entity.PacMan;
@@ -24,22 +21,23 @@ public class Game {
 
 	public PacMan pacMan;
 	public boolean playing, eatMode;
-	public ArrayList<CollisionRect> boxes;
-	public ArrayList<Intersection> intersections;
-	public ArrayList<Portal> portals;
-	public ArrayList<Tic> tic;
-	public ArrayList<PowerUp> powerUp;
-	public ArrayList<Ghost> ghosts;
-	public int score;
+	public ArrayList<CollisionRect> boxes; // holds all the boundries
+	public ArrayList<Intersection> intersections; // holds all he intersections
+	public ArrayList<Portal> portals; // holds all the portals
+	public ArrayList<Tic> tic; // holds all the tics
+	public ArrayList<PowerUp> powerUp; // holds all the powerups
+	public ArrayList<Ghost> ghosts; // holds all the ghosts
+	public int score; // holds the score
 
-	private ShapeRenderer shapeRenderer;
 	private Texture background;
 	private SpriteBatch batch;
 	private BitmapFont font;
 
+	/*
+	 * Constructor for the Game class
+	 */
 	public Game() {
 		batch = new SpriteBatch();
-		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont();
 		background = new Texture("game/bGround.png");
 		pacMan = new PacMan(new Texture("game/pacman.png"), 475, 158);
@@ -55,6 +53,9 @@ public class Game {
 		createBoundaries();
 	}
 
+	/*
+	 * Renders everything for the game
+	 */
 	public void render() {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -64,17 +65,20 @@ public class Game {
 		renderEntitis(batch);
 		font.getData().setScale(2F);
 		font.draw(batch, "" + score, 22, 595);
-		int mouseX = Gdx.input.getX();
-		int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-		System.out.println(mouseX + " , " + mouseY);
 		batch.end();
 	}
 
+	/*
+	 * Creates the protals for the map Creates the ghosts for the game Creates
+	 * all the powerups for the map Creates all the tics for the map
+	 */
 	private void createEntities() {
 
 		portals.add(new Portal(168, 381, 167, 382, 790));
 		portals.add(new Portal(823, 382, 824, 383, 198));
 
+		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 374, 308));
+		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 374, 308));
 		ghosts.add(new Ghost(new Texture("game/ghostR.png"), 374, 308));
 
 		powerUp.add(new PowerUp(new Texture("game/cherry.png"), 308, 105));
@@ -222,6 +226,9 @@ public class Game {
 		tic.add(new Tic(new Texture("game/tic.png"), 188, 45));
 	}
 
+	/*
+	 * Renders all the powerups Renders all the tics Renders all the ghosts
+	 */
 	private void renderEntitis(SpriteBatch batch) {
 		for (PowerUp p : powerUp) {
 			p.render(batch);
@@ -234,6 +241,10 @@ public class Game {
 		}
 	}
 
+	/*
+	 * Creates all the intersections for the map Creates all the boundries for
+	 * the map
+	 */
 	private void createBoundaries() {
 
 		intersections.add(new Intersection(183, 40, 184, 41, Arrays.asList(FACING.UP, FACING.RIGHT)));
@@ -254,7 +265,7 @@ public class Game {
 
 		intersections.add(new Intersection(186, 177, 187, 178, Arrays.asList(FACING.UP, FACING.RIGHT)));
 		intersections.add(new Intersection(230, 177, 231, 178, Arrays.asList(FACING.LEFT, FACING.DOWN)));
-		intersections.add(new Intersection(304, 177, 305, 178, Arrays.asList(FACING.UP, FACING.DOWN, FACING.RIGHT)));
+		intersections.add(new Intersection(310, 177, 311, 178, Arrays.asList(FACING.UP, FACING.DOWN, FACING.RIGHT)));
 		intersections.add(new Intersection(382, 177, 383, 178, Arrays.asList(FACING.LEFT, FACING.DOWN, FACING.RIGHT)));
 		intersections.add(new Intersection(457, 177, 458, 178, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));
 		intersections.add(new Intersection(535, 177, 536, 178, Arrays.asList(FACING.UP, FACING.LEFT, FACING.RIGHT)));
@@ -358,20 +369,9 @@ public class Game {
 		boxes.add(new CollisionRect(154, 702, 843, 713));
 	}
 
-	private void renderBoundaries() {
-		shapeRenderer.begin(ShapeType.Filled);
-		for (CollisionRect r : boxes) {
-			shapeRenderer.setColor(Color.RED);
-			shapeRenderer.rect(r.x, r.y, r.width, r.height);
-		}
-		for (Intersection r : intersections) {
-			shapeRenderer.setColor(Color.GREEN);
-			shapeRenderer.rect(r.getCollisionRect().x, r.getCollisionRect().y, r.getCollisionRect().width,
-					r.getCollisionRect().height);
-		}
-		shapeRenderer.end();
-	}
-
+	/*
+	 * All the possible direction for the pacman to face.
+	 */
 	public enum FACING {
 		UP, DOWN, RIGHT, LEFT
 	}

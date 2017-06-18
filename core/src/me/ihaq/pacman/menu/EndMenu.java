@@ -17,26 +17,33 @@ public class EndMenu {
 	private BitmapFont font;
 	private GlyphLayout glyphLayout;
 
+	
+	/*
+	 * Constructor for the EndMenu class. 
+	 * This is pretty much the same thing as the create() method in the Main.java class.
+	 */
 	public EndMenu() {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		glyphLayout = new GlyphLayout();
 	}
 
+	/*
+	 * Renders everything for the EndMenu Class.
+	 * If the user presses ENTER it returns to main menu.
+	 * If the user presses R it restarts the game.
+	 */
 	public void render() {
 		Main.MAIN.getMusic().stop();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		glyphLayout.setText(font, "" + Main.GAME.score);
+		float width = glyphLayout.width;
 		batch.begin();
 		batch.draw(new Texture("end/end.png"), 0, 0);
 		font.getData().setScale(3F);
-		glyphLayout.setText(font, "" + Main.GAME.score);
-		float width = glyphLayout.width;
 		font.draw(batch, "" + Main.GAME.score, (Gdx.graphics.getWidth() / 2) - width / 2, 360);
 		batch.end();
-		int mouseX = Gdx.input.getX();
-		int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-		System.out.println(mouseX + " , " + mouseY);
 		if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
 			Main.state = STATE.MAIN;
 		} else if (Gdx.input.isKeyPressed(Input.Keys.R)) {
