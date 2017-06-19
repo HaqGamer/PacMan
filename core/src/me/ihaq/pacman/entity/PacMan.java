@@ -55,6 +55,33 @@ public class PacMan {
 			checkForPortals();
 			checkForRotation();
 			checkForCollisions();
+			checkForGameOver();
+		}
+	}
+	
+	/*
+	 * Goes through the tics and powerups and checks if none exist.
+	 * If none exist it renders the end menu.
+	 */
+	private void checkForGameOver(){
+		boolean over = false;
+		for(Tic t : Main.GAME.tic){
+			if(t.isAlive()){
+				over = false;
+			}else{
+				over = true;
+			}
+		}
+		for(PowerUp t : Main.GAME.powerUp){
+			if(t.isAlive()){
+				over = false;
+			}else{
+				over = true;
+			}
+		}
+		
+		if(over){
+			Main.state = STATE.END;
 		}
 	}
 
